@@ -1,8 +1,11 @@
 import os
 import json
 import logging
+import time
 from datetime import datetime
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 import feedparser
 from typing import List, Dict, Any
 
@@ -17,15 +20,32 @@ ARXIV_API_URL = "http://export.arxiv.org/api/query"
 PAPERS_DIR = "papers"
 CONFIG_FILE = "config.json"
 
+def get_requests_session() -> requests.Session:
+    """
+    Create a robust HTTP session with a retry strategy for resilient network calls.
+    """
+    session = requests.Session()
+    
+    # Retry up to 3 times, with exponential backoff (1s, 2s, 4s)
+    # Target typical transient server errors or rate limits
+    retry_strategy = Retry(
+        total=3,
+        backoff_factor=1,
+        status_forcelist=[429, 500, 502, 503, 504],
+        allowed_methods=["GET"]
+    )
+    
+    adapter = HTTPAdapter(max_retries=retry_strategy)
+    session.mount("http://", adapter)
+    session.mount("https://", adapter)
+    
+    return session
+
 def load_config() -> Dict[str, Any]:
     """Load configuration settings from config.json."""
     if not os.path.exists(CONFIG_FILE):
         logger.warning(f"Config file {CONFIG_FILE} not found. Using defaults.")
-        return {
-            "categories": ["math.NA", "math.LO"], 
-            "max_results_per_category": 3, 
-            "timeout_seconds": 10
-        }
+        return {"categories": ["math.NA", "math.LO"], "max_results_per_category": 3, "timeout_seconds": 10}
     
     try:
         with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
@@ -34,8 +54,8 @@ def load_config() -> Dict[str, Any]:
         logger.error(f"Failed to parse {CONFIG_FILE}: {e}")
         return {"categories": [], "max_results_per_category": 5, "timeout_seconds": 10}
 
-def fetch_arxiv_papers(category: str, max_results: int, timeout: int) -> List[Dict[str, Any]]:
-    """Fetch recent papers from a specific arXiv category."""
+def fetch_arxiv_papers(session: requests.Session, category: str, max_results: int, timeout: int) -> List[Dict[str, Any]]:
+    """Fetch recent papers from a specific arXiv category using a resilient session."""
     logger.info(f"Fetching up to {max_results} papers for category: {category}")
     
     params = {
@@ -46,7 +66,7 @@ def fetch_arxiv_papers(category: str, max_results: int, timeout: int) -> List[Di
     }
 
     try:
-        response = requests.get(ARXIV_API_URL, params=params, timeout=timeout)
+        response = session.get(ARXIV_API_URL, params=params, timeout=timeout)
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
         logger.error(f"Failed to fetch data from arXiv API for {category}: {e}")
@@ -101,9 +121,16 @@ if __name__ == "__main__":
     max_results = config.get("max_results_per_category", 5)
     timeout = config.get("timeout_seconds", 15)
     
+    session = get_requests_session()
     all_fetched_papers = []
-    for cat in categories:
-        recent_papers = fetch_arxiv_papers(category=cat, max_results=max_results, timeout=timeout)
+    
+    for idx, cat in enumerate(categories):
+        # Polite delay to avoid hitting rate limits (applied after the first request)
+        if idx > 0:
+            logger.info("Waiting 3 seconds to respect arXiv API rate limits...")
+            time.sleep(3)
+            
+        recent_papers = fetch_arxiv_papers(session=session, category=cat, max_results=max_results, timeout=timeout)
         all_fetched_papers.extend(recent_papers)
         
     if all_fetched_papers:

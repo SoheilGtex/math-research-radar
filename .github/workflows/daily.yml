@@ -1,0 +1,51 @@
+name: Daily Math Research Radar
+
+on:
+  schedule:
+    # Runs at 08:00 UTC every day
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+    # Allows you to trigger the workflow manually from the GitHub Actions UI
+
+permissions:
+  contents: write # Required for the bot to push changes back to the repository
+
+jobs:
+  update-radar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run pipeline
+        run: python main.py
+
+      - name: Commit and Push changes
+        run: |
+          # Configure Git to act as the official GitHub Actions bot
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Add only the directories and files modified by our scripts
+          git add papers/ stats/ README.md
+          
+          # Check if there are any staged changes
+          if ! git diff --staged --quiet; then
+            git commit -m "chore(bot): daily radar update [skip ci]"
+            git push
+            echo "Changes committed and pushed successfully."
+          else
+            echo "No new papers or changes to commit."
+          fi

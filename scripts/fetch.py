@@ -15,11 +15,27 @@ logger = logging.getLogger(__name__)
 
 ARXIV_API_URL = "http://export.arxiv.org/api/query"
 PAPERS_DIR = "papers"
+CONFIG_FILE = "config.json"
 
-def fetch_arxiv_papers(category: str, max_results: int = 5) -> List[Dict[str, Any]]:
-    """
-    Fetch recent papers from a specific arXiv category.
-    """
+def load_config() -> Dict[str, Any]:
+    """Load configuration settings from config.json."""
+    if not os.path.exists(CONFIG_FILE):
+        logger.warning(f"Config file {CONFIG_FILE} not found. Using defaults.")
+        return {
+            "categories": ["math.NA", "math.LO"], 
+            "max_results_per_category": 3, 
+            "timeout_seconds": 10
+        }
+    
+    try:
+        with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to parse {CONFIG_FILE}: {e}")
+        return {"categories": [], "max_results_per_category": 5, "timeout_seconds": 10}
+
+def fetch_arxiv_papers(category: str, max_results: int, timeout: int) -> List[Dict[str, Any]]:
+    """Fetch recent papers from a specific arXiv category."""
     logger.info(f"Fetching up to {max_results} papers for category: {category}")
     
     params = {
@@ -30,7 +46,7 @@ def fetch_arxiv_papers(category: str, max_results: int = 5) -> List[Dict[str, An
     }
 
     try:
-        response = requests.get(ARXIV_API_URL, params=params, timeout=10)
+        response = requests.get(ARXIV_API_URL, params=params, timeout=timeout)
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
         logger.error(f"Failed to fetch data from arXiv API for {category}: {e}")
@@ -54,9 +70,7 @@ def fetch_arxiv_papers(category: str, max_results: int = 5) -> List[Dict[str, An
     return papers
 
 def save_papers_to_json(papers: List[Dict[str, Any]], filename: str) -> None:
-    """
-    Save papers to a JSON file, ensuring no duplicates exist based on paper ID.
-    """
+    """Save papers to a JSON file, ensuring no duplicates exist based on paper ID."""
     os.makedirs(PAPERS_DIR, exist_ok=True)
     filepath = os.path.join(PAPERS_DIR, filename)
     
@@ -68,15 +82,13 @@ def save_papers_to_json(papers: List[Dict[str, Any]], filename: str) -> None:
         except json.JSONDecodeError:
             logger.warning(f"File {filepath} is corrupted. Starting fresh.")
             
-    # Deduplication logic using arXiv IDs
     existing_ids = {paper["id"] for paper in existing_papers}
     new_papers = [p for p in papers if p["id"] not in existing_ids]
     
     if not new_papers:
-        logger.info("No new papers to save. All fetched papers are already stored.")
+        logger.info("No new papers to save.")
         return
 
-    # Append new papers and save
     all_papers = existing_papers + new_papers
     with open(filepath, 'w', encoding='utf-8') as f:
         json.dump(all_papers, f, indent=4, ensure_ascii=False)
@@ -84,16 +96,17 @@ def save_papers_to_json(papers: List[Dict[str, Any]], filename: str) -> None:
     logger.info(f"Saved {len(new_papers)} new papers to {filepath}.")
 
 if __name__ == "__main__":
-    # Tracking specific mathematical domains
-    categories_to_track = ["math.NA", "math.LO"] 
+    config = load_config()
+    categories = config.get("categories", [])
+    max_results = config.get("max_results_per_category", 5)
+    timeout = config.get("timeout_seconds", 15)
     
     all_fetched_papers = []
-    for cat in categories_to_track:
-        recent_papers = fetch_arxiv_papers(category=cat, max_results=3)
+    for cat in categories:
+        recent_papers = fetch_arxiv_papers(category=cat, max_results=max_results, timeout=timeout)
         all_fetched_papers.extend(recent_papers)
         
     if all_fetched_papers:
-        # Save based on today's date
         today_str = datetime.now().strftime("%Y-%m-%d")
         filename = f"{today_str}.json"
         save_papers_to_json(all_fetched_papers, filename)

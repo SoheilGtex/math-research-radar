@@ -1,0 +1,10 @@
+{
+    "categories": [
+        "math.NA",
+        "math.RA",
+        "math.CA",
+        "math.LO"
+    ],
+    "max_results_per_category": 5,
+    "timeout_seconds": 15
+}

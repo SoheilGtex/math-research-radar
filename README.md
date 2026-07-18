@@ -4,10 +4,12 @@ An automated pipeline to track, store, and analyze new Mathematics papers from a
 Built with Python and GitHub Actions.
 
 ## 📊 Repository Statistics
-**Total Papers Tracked:** 6
+**Total Papers Tracked:** 20
 
-- **math.LO**: 3 papers
-- **math.NA**: 3 papers
+- **math.CA**: 5 papers
+- **math.LO**: 5 papers
+- **math.NA**: 5 papers
+- **math.RA**: 5 papers
 
 
 ## 🆕 Latest Discoveries
@@ -24,4 +26,4 @@ Built with Python and GitHub Actions.
 
 
 ---
-*Last updated automatically on: **2026-07-18 20:06:42 UTC***
+*Last updated automatically on: **2026-07-18 20:13:33 UTC***

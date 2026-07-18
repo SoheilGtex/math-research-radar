@@ -32,6 +32,7 @@ def main():
         "scripts/fetch.py",
         "scripts/update_stats.py",
         "scripts/update_readme.py",
+        "scripts/generate_dashboard.py",
     ]
 
     for step in pipeline_steps:

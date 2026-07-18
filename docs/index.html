@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Research Radar Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f6f8fa; margin: 0; padding: 20px; color: #24292f; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+        h1 { text-align: center; color: #0969da; }
+        .footer { text-align: center; margin-top: 30px; font-size: 12px; color: #57606a; }
+        canvas { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📡 Math Research Radar</h1>
+        <p style="text-align: center;">Automated daily tracker for arXiv mathematics papers.</p>
+        
+        <canvas id="categoryChart"></canvas>
+        
+        <div class="footer">
+            Last updated: 2026-07-18 20:33:18 UTC
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('categoryChart').getContext('2d');
+        const categoryChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["math.CA", "math.LO", "math.NA", "math.RA"],
+                datasets: [{
+                    label: 'Number of Papers Tracked',
+                    data: [10, 10, 10, 10],
+                    backgroundColor: 'rgba(9, 105, 218, 0.6)',
+                    borderColor: 'rgba(9, 105, 218, 1)',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true, ticks: { precision: 0 } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

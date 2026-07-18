@@ -1,0 +1,50 @@
+[
+    {
+        "id": "http://arxiv.org/abs/2607.15256v1",
+        "title": "Analytic finite-rank corrections for singularly weighted estimates in a computer-assisted proof of 3D Euler singularity",
+        "published": "2026-07-16T17:51:23Z",
+        "summary": "Computer-assisted proofs of self-similar singularity formation for fluid equations often rely on numerically constructed approximate profiles. One effective approach to establishing stability of perturbations around a numerically constructed profile is to perform weighted energy estimates with singular weights near the singularity. However, the weighted norms require exact local vanishing conditions that are not automatically preserved by the equations nor the numerical construction. In this paper, we review an analytic low-rank correction method first developed in [ChenHou2023a,ChenHou2023b] to overcome this difficulty. The numerical step determines coefficients, rigorous bounds, and low-order defect modes in explicit global basis representations, while the required vanishing conditions are enforced analytically through low-rank corrections derived from Taylor expansions of the relevant quantities represented in a smooth basis. For completeness, we briefly review the singularly weighted estimates and a quantitative finite-rank perturbation method in the 2D Boussinesq / 3D Euler stability argument, where singular weights and the required vanishing order arise. Against this background, we formulate the local correction principle in a simplified setting, explain the correction of the residual error in numerical constructions of approximate space-time solutions and the stream function, and discuss its broader applicability to computer-assisted stability analysis for nonlocal PDEs.",
+        "link": "https://arxiv.org/abs/2607.15256v1",
+        "category": "math.NA"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.15195v1",
+        "title": "SciPhy Reinforcement Learning for Portfolio Optimization",
+        "published": "2026-07-16T16:51:24Z",
+        "summary": "This paper introduces a dynamic portfolio optimization framework for large institutional investors using Scientific Physics-Informed Reinforcement Learning (SciPhyRL). Formulated in continuous time over an extended state space that includes explicit cumulative costs, the approach leverages offline historical data to learn optimal, distribution-aware strategies. A core innovation reduces the optimization challenge to solving an HJB equation by projecting it onto observed trajectories as a pathwise Hamilton-Jacobi equation. This is solved directly from data using PINN in a single offline sweep, eliminating the need for traditional value or policy iteration. To make the method effective at practical short horizons, the control variable is recast from a continuous trading rate to a discrete target holding. This ensures signal-implied positions are reached immediately, while execution costs are evaluated against a microstructure-grounded quadratic price impact model. Evaluated on a $14$-asset ETF universe using an engineered oracle signal, the learned Gibbs policy yields substantial out-of-sample Sharpe ratio improvements over static and myopic baselines. The results demonstrate that the proposed framework successfully translates known signal quality into a robust, multi-period, and cost-aware allocation mechanism with strictly controlled volatility and turnover.",
+        "link": "https://arxiv.org/abs/2607.15195v1",
+        "category": "math.NA"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.15192v1",
+        "title": "Efficient higher-order local time integration for Friedrichs' systems",
+        "published": "2026-07-16T16:47:51Z",
+        "summary": "In this paper, we construct an efficient higher-order local time integration scheme for spatially discretized linear Friedrichs' systems. In particular, our interest is in problems where only a few of the mesh elements are small while the majority of the elements is much larger. The special combination of two methods like the leapfrog method on the coarse part of the mesh and the Crank-Nicolson method on the fine part as was done in Hochbruck, Sturm 2016 and Hochbruck, Köhler 2022 is not suitable for higher-order time integration. Therefore, we suggest to approximate the solution of the linear systems arising in each time step by a preconditioned Krylov subspace method, e.g., the quasi-minimal residual method by Freund and Nachtigal 1991. The techniques developed here for linear problems also carry over to nonlinear problems, where linear systems of the same type arise within a Newton-type iteration.   Motivated by the analysis of locally implicit methods by Hochbruck and Sturm 2016, we show how to construct a preconditioner in such a way that the number of iterations required by the Krylov subspace method to achieve a certain accuracy is bounded independently of the diameter of the small mesh elements. We prove this behavior by using Faber polynomials and complex approximation theory.   The cost to apply the preconditioner consists of the solution of a small linear system, whose dimension corresponds to the degrees of freedom within the fine part of the mesh (and its next coarse neighbors). If this dimension is small compared to the size of the full mesh, the preconditioner is very efficient.   We conclude by verifying our theoretical results with numerical experiments for the fourth-order Gauss-Legendre Runge--Kutta method.",
+        "link": "https://arxiv.org/abs/2607.15192v1",
+        "category": "math.NA"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.14907v1",
+        "title": "Recognition of algebraic matroids is undecidable",
+        "published": "2026-07-16T12:25:38Z",
+        "summary": "We prove that the recognition problem for algebraic matroids is undecidable. Explicitly, this means that there is no algorithm that takes as input a finite set $S$ and a function $r\\colon\\mathcal{P}(S) \\to \\mathbb{Z}_{\\ge 0}$ (where $\\mathcal{P}(S)$ is the power set) and decides whether there exists a pair of fields $F \\subset K$, and a function $f\\colon S \\to K$, such that for all $A \\subseteq S$: $\\mathrm{tr.deg}_{K/F}(f(A)) = r(A)$.   This problem is known to be decidable if the characteristic of the fields involved is constrained to be zero. We prove that it is undecidable if the characteristic is either left unspecified (in which case a realization over any characteristic is accepted) or fixed to be a prime $p$.   The proof relies on Hrushovski--Zilber's Group Configuration Theorem and on the work of Evans and Hrushovski on \"Projective Planes in Algebraically Closed Fields\". We relate two different such projective planes, and eventually construct a reduction from the solvability of Diophantine equations over $\\mathbb{F}_p(x)$ ($p$ prime) to algebraicity of matroids. Solvability of Diophantine equations over $\\mathbb{F}_p(x)$ was proved to be undecidable by Pheidas for all $p > 2$, and later by Videla for $p=2$. A central part of our proof is a variant of the so-called Field Configuration Theorem.",
+        "link": "https://arxiv.org/abs/2607.14907v1",
+        "category": "math.LO"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.14757v1",
+        "title": "Component Modalities of Quantum Logic",
+        "published": "2026-07-16T09:43:01Z",
+        "summary": "This paper determines the structural and proof-theoretic consequences of the forcing condition in relational quantum modal logic, under which every modal transition available at a world is also available at every world compatible with it. We prove that modal successor sets are constant on compatibility components, so boxed truth sets belong to the Boolean algebra of unions of these components. The relation holding exactly between worlds in the same component assigns to each stable proposition its greatest lower and least upper approximations by unions of components, and in hard superselection models these are exactly the approximations by central propositions. We adopt local validity for sequents with multiple conclusions to give a semantics for modal excluded middle on frames with several components. A connectedization obtained by adding one point then shows that component frames, equivalence frames satisfying the forcing condition, and connected compatibility frames with universal modal accessibility have the same logic for sequents with one conclusion. Finally, maximal consistent pairs yield a canonical model, and the calculus obtained by adding T, 4, and B is proved sound and complete for the three frame classes. These results characterize the logical scope of the forcing condition and establish a complete proof theory for component modalities.",
+        "link": "https://arxiv.org/abs/2607.14757v1",
+        "category": "math.LO"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.13969v1",
+        "title": "Further quantitative moduli around uniform convexity",
+        "published": "2026-07-15T15:55:20Z",
+        "summary": "We derive new formulas for quantities involved in the study of uniformly convex spaces, linear and nonlinear.",
+        "link": "https://arxiv.org/abs/2607.13969v1",
+        "category": "math.LO"
+    }
+]

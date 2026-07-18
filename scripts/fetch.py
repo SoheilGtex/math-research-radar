@@ -1,4 +1,7 @@
+import os
+import json
 import logging
+from datetime import datetime
 import requests
 import feedparser
 from typing import List, Dict, Any
@@ -11,6 +14,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 ARXIV_API_URL = "http://export.arxiv.org/api/query"
+PAPERS_DIR = "papers"
 
 def fetch_arxiv_papers(category: str, max_results: int = 5) -> List[Dict[str, Any]]:
     """
@@ -18,7 +22,6 @@ def fetch_arxiv_papers(category: str, max_results: int = 5) -> List[Dict[str, An
     """
     logger.info(f"Fetching up to {max_results} papers for category: {category}")
     
-    # arXiv API parameters
     params = {
         "search_query": f"cat:{category}",
         "sortBy": "submittedDate",
@@ -27,38 +30,70 @@ def fetch_arxiv_papers(category: str, max_results: int = 5) -> List[Dict[str, An
     }
 
     try:
-        # 10 seconds timeout is a good practice to prevent hanging connections
         response = requests.get(ARXIV_API_URL, params=params, timeout=10)
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
-        logger.error(f"Failed to fetch data from arXiv API: {e}")
+        logger.error(f"Failed to fetch data from arXiv API for {category}: {e}")
         return []
 
-    # Parse the Atom feed returned by arXiv
     feed = feedparser.parse(response.content)
     
     papers = []
     for entry in feed.entries:
-        # Extract and clean up the data
         paper = {
             "id": entry.id,
             "title": entry.title.replace('\n', ' ').strip(),
             "published": entry.published,
             "summary": entry.summary.replace('\n', ' ').strip(),
-            "link": entry.link
+            "link": entry.link,
+            "category": category
         }
         papers.append(paper)
         
-    logger.info(f"Successfully parsed {len(papers)} papers.")
+    logger.info(f"Successfully parsed {len(papers)} papers from {category}.")
     return papers
 
-if __name__ == "__main__":
-    # Testing the function with 'math.RA' (Rings and Algebras)
-    test_category = "math.RA"
-    recent_papers = fetch_arxiv_papers(category=test_category, max_results=3)
+def save_papers_to_json(papers: List[Dict[str, Any]], filename: str) -> None:
+    """
+    Save papers to a JSON file, ensuring no duplicates exist based on paper ID.
+    """
+    os.makedirs(PAPERS_DIR, exist_ok=True)
+    filepath = os.path.join(PAPERS_DIR, filename)
     
-    # Print the results for manual verification
-    for p in recent_papers:
-        print(f"\nTitle: {p['title']}")
-        print(f"Date: {p['published']}")
-        print(f"Link: {p['link']}")
+    existing_papers = []
+    if os.path.exists(filepath):
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                existing_papers = json.load(f)
+        except json.JSONDecodeError:
+            logger.warning(f"File {filepath} is corrupted. Starting fresh.")
+            
+    # Deduplication logic using arXiv IDs
+    existing_ids = {paper["id"] for paper in existing_papers}
+    new_papers = [p for p in papers if p["id"] not in existing_ids]
+    
+    if not new_papers:
+        logger.info("No new papers to save. All fetched papers are already stored.")
+        return
+
+    # Append new papers and save
+    all_papers = existing_papers + new_papers
+    with open(filepath, 'w', encoding='utf-8') as f:
+        json.dump(all_papers, f, indent=4, ensure_ascii=False)
+        
+    logger.info(f"Saved {len(new_papers)} new papers to {filepath}.")
+
+if __name__ == "__main__":
+    # Tracking specific mathematical domains
+    categories_to_track = ["math.NA", "math.LO"] 
+    
+    all_fetched_papers = []
+    for cat in categories_to_track:
+        recent_papers = fetch_arxiv_papers(category=cat, max_results=3)
+        all_fetched_papers.extend(recent_papers)
+        
+    if all_fetched_papers:
+        # Save based on today's date
+        today_str = datetime.now().strftime("%Y-%m-%d")
+        filename = f"{today_str}.json"
+        save_papers_to_json(all_fetched_papers, filename)

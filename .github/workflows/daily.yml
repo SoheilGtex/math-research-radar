@@ -2,10 +2,8 @@ name: Daily Math Research Radar
 
 on:
   schedule:
-    # Runs at 08:00 UTC every day
     - cron: '0 8 * * *'
   workflow_dispatch:
-    # Allows you to trigger the workflow manually from the GitHub Actions UI
 
 permissions:
   contents: write
@@ -29,9 +27,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Lint and Format Code
+        run: |
+          # Fails the pipeline if the code does not meet formatting standards
+          ruff check .
+          ruff format --check .
+
       - name: Run Unit Tests
         run: |
-          # Stop the pipeline if any test fails
           pytest
 
       - name: Run pipeline

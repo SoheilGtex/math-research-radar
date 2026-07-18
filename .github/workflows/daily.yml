@@ -8,7 +8,7 @@ on:
     # Allows you to trigger the workflow manually from the GitHub Actions UI
 
 permissions:
-  contents: write # Required for the bot to push changes back to the repository
+  contents: write
 
 jobs:
   update-radar:
@@ -29,19 +29,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Run Unit Tests
+        run: |
+          # Stop the pipeline if any test fails
+          pytest
+
       - name: Run pipeline
         run: python main.py
 
       - name: Commit and Push changes
         run: |
-          # Configure Git to act as the official GitHub Actions bot
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Add only the directories and files modified by our scripts
           git add papers/ stats/ README.md
           
-          # Check if there are any staged changes
           if ! git diff --staged --quiet; then
             git commit -m "chore(bot): daily radar update [skip ci]"
             git push

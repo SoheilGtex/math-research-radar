@@ -29,7 +29,6 @@ jobs:
 
       - name: Lint and Format Code
         run: |
-          # Fails the pipeline if the code does not meet formatting standards
           ruff check .
           ruff format --check .
 
@@ -45,10 +44,11 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          git add papers/ stats/ README.md
+          # Added docs/ to automatically deploy the updated dashboard
+          git add papers/ stats/ README.md docs/
           
           if ! git diff --staged --quiet; then
-            git commit -m "chore(bot): daily radar update [skip ci]"
+            git commit -m "chore(bot): daily radar and dashboard update [skip ci]"
             git push
             echo "Changes committed and pushed successfully."
           else

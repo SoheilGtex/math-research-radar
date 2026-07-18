@@ -2,6 +2,7 @@ import os
 import json
 import glob
 import logging
+import re
 from datetime import datetime, timezone
 
 # Configure logging
@@ -17,9 +18,9 @@ PAPERS_DIR = "papers"
 
 def generate_readme() -> None:
     """
-    Generate the README.md file dynamically based on stats and recent papers.
+    Generate the dynamic parts of the README and inject them between specific markers.
     """
-    logger.info("Starting README generation...")
+    logger.info("Starting dynamic README generation...")
 
     # 1. Load statistics
     total_papers = 0
@@ -28,7 +29,6 @@ def generate_readme() -> None:
         try:
             with open(STATS_FILE, 'r', encoding='utf-8') as f:
                 stats = json.load(f)
-                # Sort categories alphabetically
                 for cat in sorted(stats.keys()):
                     count = stats[cat]
                     stats_text += f"- **{cat}**: {count} papers\n"
@@ -38,7 +38,6 @@ def generate_readme() -> None:
 
     # 2. Load latest papers
     latest_papers_text = ""
-    # glob gets all json files, sorted reverse means newest first (e.g., 2026-07-18 before 2026-07-17)
     paper_files = sorted(glob.glob(os.path.join(PAPERS_DIR, "*.json")), reverse=True)
     
     if paper_files:
@@ -48,20 +47,15 @@ def generate_readme() -> None:
                 papers = json.load(f)
                 # Display up to 5 most recent papers
                 for p in papers[:5]:
-                    # Extract only the date part from ISO format
                     pub_date = p.get('published', 'Unknown Date')[:10]
                     latest_papers_text += f"1. **[{p['title']}]({p['link']})**\n   - *Category: {p['category']} | Published: {pub_date}*\n"
         except Exception as e:
             logger.error(f"Failed to read latest papers from {latest_file}: {e}")
 
-    # 3. Construct Markdown content
+    # 3. Construct Dynamic Markdown content
     now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
     
-    readme_content = f"""# 📡 Math Research Radar
-
-An automated pipeline to track, store, and analyze new Mathematics papers from arXiv.
-Built with Python and GitHub Actions.
-
+    dynamic_content = f"""
 ## 📊 Repository Statistics
 **Total Papers Tracked:** {total_papers}
 
@@ -71,14 +65,31 @@ Built with Python and GitHub Actions.
 {latest_papers_text if latest_papers_text else "_No papers fetched yet._"}
 
 ---
-*Last updated automatically on: **{now_utc}***
+*Last updated automatically by GitHub Actions on: **{now_utc}***
 """
 
-    # 4. Write to README.md
-    with open(README_PATH, 'w', encoding='utf-8') as f:
-        f.write(readme_content)
+    # 4. Inject into README.md using Regex
+    try:
+        with open(README_PATH, 'r', encoding='utf-8') as f:
+            readme_content = f.read()
+
+        # Regex pattern to match everything between the markers
+        pattern = r"(<!-- RADAR_START -->)(.*?)(<!-- RADAR_END -->)"
         
-    logger.info("Successfully updated README.md")
+        # Replace the content inside the markers with our new dynamic content
+        new_readme = re.sub(
+            pattern, 
+            rf"\1\n{dynamic_content}\n\3", 
+            readme_content, 
+            flags=re.DOTALL
+        )
+
+        with open(README_PATH, 'w', encoding='utf-8') as f:
+            f.write(new_readme)
+            
+        logger.info("Successfully updated the dynamic section of README.md")
+    except Exception as e:
+        logger.error(f"Failed to update README.md: {e}")
 
 if __name__ == "__main__":
     generate_readme()

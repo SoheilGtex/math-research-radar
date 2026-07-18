@@ -1,29 +1,21 @@
 # 📡 Math Research Radar
 
-An automated pipeline to track, store, and analyze new Mathematics papers from arXiv.
-Built with Python and GitHub Actions.
+An automated data pipeline to track, store, and analyze new Mathematics papers from arXiv.
+Built with Python, Data Engineering best practices, and orchestrated by GitHub Actions.
 
-## 📊 Repository Statistics
-**Total Papers Tracked:** 20
+## 🚀 How It Works
+This repository uses a Python pipeline to daily fetch the latest mathematics research papers based on the categories defined in `config.json`. The data is deduplicated, stored in daily JSON logs, and statistical summaries are generated automatically.
 
-- **math.CA**: 5 papers
-- **math.LO**: 5 papers
-- **math.NA**: 5 papers
-- **math.RA**: 5 papers
+### Running Locally
+To set up this pipeline on your local macOS environment:
 
+```bash
+# 1. Create and activate a virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
 
-## 🆕 Latest Discoveries
-1. **[Analytic finite-rank corrections for singularly weighted estimates in a computer-assisted proof of 3D Euler singularity](https://arxiv.org/abs/2607.15256v1)**
-   - *Category: math.NA | Published: 2026-07-16*
-1. **[SciPhy Reinforcement Learning for Portfolio Optimization](https://arxiv.org/abs/2607.15195v1)**
-   - *Category: math.NA | Published: 2026-07-16*
-1. **[Efficient higher-order local time integration for Friedrichs' systems](https://arxiv.org/abs/2607.15192v1)**
-   - *Category: math.NA | Published: 2026-07-16*
-1. **[Recognition of algebraic matroids is undecidable](https://arxiv.org/abs/2607.14907v1)**
-   - *Category: math.LO | Published: 2026-07-16*
-1. **[Component Modalities of Quantum Logic](https://arxiv.org/abs/2607.14757v1)**
-   - *Category: math.LO | Published: 2026-07-16*
+# 2. Install dependencies
+pip install -r requirements.txt
 
-
----
-*Last updated automatically on: **2026-07-18 20:13:33 UTC***
+# 3. Execute the full pipeline (Fetch -> Aggregate -> Update README)
+python main.py

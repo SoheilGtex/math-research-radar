@@ -1,7 +1,7 @@
 import logging
 import time
 from datetime import datetime
-from typing import Any, Dict, List
+from typing import List
 
 import feedparser
 import requests
@@ -9,6 +9,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 from radar.config import settings
+from radar.models import Paper
 from radar.storage.json import save_papers
 
 logger = logging.getLogger(__name__)
@@ -29,8 +30,8 @@ def get_requests_session() -> requests.Session:
     session.mount("https://", adapter)
     return session
 
-def fetch_arxiv_papers(session: requests.Session, category: str) -> List[Dict[str, Any]]:
-    """Fetch recent papers from arXiv using centralized configurations."""
+def fetch_arxiv_papers(session: requests.Session, category: str) -> List[Paper]:
+    """Fetch recent papers from arXiv and map them to the unified Paper model."""
     logger.info(f"Fetching up to {settings.max_results_per_category} papers for category: {category}")
     
     params = {
@@ -49,17 +50,18 @@ def fetch_arxiv_papers(session: requests.Session, category: str) -> List[Dict[st
 
     feed = feedparser.parse(response.content)
     
-    papers = []
+    papers: List[Paper] = []
     for entry in feed.entries:
-        paper = {
-            "id": entry.id,
-            "title": entry.title.replace('\n', ' ').strip(),
-            "published": entry.published,
-            "summary": entry.summary.replace('\n', ' ').strip(),
-            "link": entry.link,
-            "category": category,
-            "source": "arxiv"
-        }
+        # Enforce schema instantly upon data extraction
+        paper = Paper(
+            id=entry.id,
+            title=entry.title.replace('\n', ' ').strip(),
+            published=entry.published,
+            summary=entry.summary.replace('\n', ' ').strip(),
+            link=entry.link,
+            category=category,
+            source="arxiv"
+        )
         papers.append(paper)
         
     logger.info(f"Successfully parsed {len(papers)} papers from {category}.")
@@ -68,7 +70,7 @@ def fetch_arxiv_papers(session: requests.Session, category: str) -> List[Dict[st
 def run_arxiv_pipeline() -> None:
     """Entry point for the arXiv fetcher module."""
     session = get_requests_session()
-    all_fetched_papers = []
+    all_fetched_papers: List[Paper] = []
     
     for idx, cat in enumerate(settings.categories):
         if idx > 0:

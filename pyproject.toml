@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "math-research-radar"
+version = "0.1.0"
+description = "Automated Research Intelligence Platform for Mathematics"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "requests==2.32.3",
+    "feedparser==6.0.11",
+    "urllib3<2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.3.2",
+    "ruff==0.5.2",
+]
+
+[tool.ruff]
+# Standard configuration for the Ruff linter and formatter
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"] # Enable standard errors, fatal errors, and import sorting
+ignore = []

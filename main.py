@@ -1,8 +1,8 @@
-import subprocess
 import logging
+import subprocess
 import sys
 
-# Import our new native module
+from radar.analytics.stats import generate_statistics
 from radar.fetchers.arxiv import run_arxiv_pipeline
 
 logging.basicConfig(
@@ -32,10 +32,17 @@ def main():
     except Exception as e:
         logger.error(f"❌ Pipeline failed during arXiv fetch: {e}")
         sys.exit(1)
+        
+    logger.info("🚀 Running Native Module: Analytics Generator...")
+    try:
+        generate_statistics()
+        logger.info("✅ Finished Analytics Generator successfully.\n")
+    except Exception as e:
+        logger.error(f"❌ Pipeline failed during analytics generation: {e}")
+        sys.exit(1)
     
     # 2. Execute Legacy Scripts (To be refactored soon)
     legacy_steps = [
-        "scripts/update_stats.py",
         "scripts/update_readme.py",
         "scripts/generate_dashboard.py"
     ]

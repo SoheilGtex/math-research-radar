@@ -1,15 +1,15 @@
-import os
-import json
 import logging
 import time
 from datetime import datetime
+from typing import Any, Dict, List
+
+import feedparser
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-import feedparser
-from typing import List, Dict, Any
 
 from radar.config import settings
+from radar.storage.json import save_papers
 
 logger = logging.getLogger(__name__)
 
@@ -65,32 +65,6 @@ def fetch_arxiv_papers(session: requests.Session, category: str) -> List[Dict[st
     logger.info(f"Successfully parsed {len(papers)} papers from {category}.")
     return papers
 
-def save_papers_to_json(papers: List[Dict[str, Any]], filename: str) -> None:
-    """Save deduplicated papers to the configured storage directory."""
-    os.makedirs(settings.papers_dir, exist_ok=True)
-    filepath = os.path.join(settings.papers_dir, filename)
-    
-    existing_papers = []
-    if os.path.exists(filepath):
-        try:
-            with open(filepath, 'r', encoding='utf-8') as f:
-                existing_papers = json.load(f)
-        except json.JSONDecodeError:
-            logger.warning(f"File {filepath} is corrupted. Starting fresh.")
-            
-    existing_ids = {paper["id"] for paper in existing_papers}
-    new_papers = [p for p in papers if p["id"] not in existing_ids]
-    
-    if not new_papers:
-        logger.info("No new papers to save.")
-        return
-
-    all_papers = existing_papers + new_papers
-    with open(filepath, 'w', encoding='utf-8') as f:
-        json.dump(all_papers, f, indent=4, ensure_ascii=False)
-        
-    logger.info(f"Saved {len(new_papers)} new papers to {filepath}.")
-
 def run_arxiv_pipeline() -> None:
     """Entry point for the arXiv fetcher module."""
     session = get_requests_session()
@@ -107,4 +81,4 @@ def run_arxiv_pipeline() -> None:
     if all_fetched_papers:
         today_str = datetime.now().strftime("%Y-%m-%d")
         filename = f"{today_str}.json"
-        save_papers_to_json(all_fetched_papers, filename)
+        save_papers(all_fetched_papers, filename)

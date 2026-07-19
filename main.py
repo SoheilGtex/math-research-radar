@@ -4,6 +4,7 @@ import sys
 
 from radar.analytics.stats import generate_statistics
 from radar.fetchers.arxiv import run_arxiv_pipeline
+from radar.reporting.readme import generate_readme
 
 logging.basicConfig(
     level=logging.INFO,
@@ -40,10 +41,17 @@ def main():
     except Exception as e:
         logger.error(f"❌ Pipeline failed during analytics generation: {e}")
         sys.exit(1)
+
+    logger.info("🚀 Running Native Module: README Generator...")
+    try:
+        generate_readme()
+        logger.info("✅ Finished README Generator successfully.\n")
+    except Exception as e:
+        logger.error(f"❌ Pipeline failed during README generation: {e}")
+        sys.exit(1)
     
-    # 2. Execute Legacy Scripts (To be refactored soon)
+    # 2. Execute Legacy Scripts
     legacy_steps = [
-        "scripts/update_readme.py",
         "scripts/generate_dashboard.py"
     ]
     

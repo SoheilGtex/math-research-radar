@@ -1,20 +1,20 @@
-import os
 import json
 import logging
+import os
 from datetime import datetime, timezone
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+from radar.config import settings
+
 logger = logging.getLogger(__name__)
 
-DOCS_DIR = "docs"
-STATS_FILE = "stats/categories.json"
-HTML_PATH = os.path.join(DOCS_DIR, "index.html")
+STATS_FILE = os.path.join(settings.stats_dir, "categories.json")
+HTML_PATH = os.path.join(settings.docs_dir, "index.html")
 
 def build_dashboard() -> None:
     """Generate a static HTML dashboard using Chart.js based on daily statistics."""
     logger.info("Starting dashboard generation...")
     
-    os.makedirs(DOCS_DIR, exist_ok=True)
+    os.makedirs(settings.docs_dir, exist_ok=True)
     
     categories = []
     counts = []
@@ -88,6 +88,3 @@ def build_dashboard() -> None:
         f.write(html_content)
         
     logger.info(f"Successfully generated dashboard at {HTML_PATH}")
-
-if __name__ == "__main__":
-    build_dashboard()

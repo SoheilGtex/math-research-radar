@@ -1,11 +1,12 @@
 import sys
 
-from radar.logger import setup_global_logger
+from radar.analytics.stats import generate_statistics
+from radar.dashboard.generator import build_dashboard
 from radar.fetchers.arxiv import run_arxiv_pipeline
 from radar.fetchers.crossref import run_crossref_pipeline
-from radar.analytics.stats import generate_statistics
+from radar.fetchers.openalex import run_openalex_pipeline
+from radar.logger import setup_global_logger
 from radar.reporting.readme import generate_readme
-from radar.dashboard.generator import build_dashboard
 
 # Initialize enterprise logging
 logger = setup_global_logger()
@@ -27,6 +28,13 @@ def main():
         logger.info("✅ Finished Crossref Fetcher successfully.\n")
     except Exception as e:
         logger.error(f"❌ Pipeline failed during Crossref fetch: {e}")
+
+    logger.info("🚀 Running Module: OpenAlex Fetcher...")
+    try:
+        run_openalex_pipeline()
+        logger.info("✅ Finished OpenAlex Fetcher successfully.\n")
+    except Exception as e:
+        logger.error(f"❌ Pipeline failed during OpenAlex fetch: {e}")
         
     # --- ANALYTICS & REPORTING STAGE ---
     logger.info("🚀 Running Module: Analytics Generator...")

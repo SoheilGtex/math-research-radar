@@ -50,3 +50,6 @@ Icon
 .idea/
 *.swp
 *.swo
+# Logs
+logs/
+*.log

@@ -1,17 +1,14 @@
-import logging
 import sys
 
-from radar.analytics.stats import generate_statistics
-from radar.dashboard.generator import build_dashboard
+from radar.logger import setup_global_logger
 from radar.fetchers.arxiv import run_arxiv_pipeline
 from radar.fetchers.crossref import run_crossref_pipeline
+from radar.analytics.stats import generate_statistics
 from radar.reporting.readme import generate_readme
+from radar.dashboard.generator import build_dashboard
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger("pipeline")
+# Initialize enterprise logging
+logger = setup_global_logger()
 
 def main():
     logger.info("Starting the Math Research Radar pipeline...")

@@ -21,10 +21,9 @@ dev = [
 ]
 
 [tool.ruff]
-# Standard configuration for the Ruff linter and formatter
 line-length = 100
 target-version = "py39"
 
 [tool.ruff.lint]
-select = ["E", "F", "I"] # Enable standard errors, fatal errors, and import sorting
-ignore = []
+select = ["E", "F", "I"]
+ignore = ["E501"] # Ignore line length warnings for HTML/Markdown strings

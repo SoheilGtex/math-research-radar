@@ -1,25 +1,39 @@
 import logging
 import time
+import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from typing import List
 
 from radar.config import settings
-from radar.fetchers.base import BaseFetcher
 from radar.models import Paper
+from radar.fetchers.base import BaseFetcher
 
 logger = logging.getLogger(__name__)
 
-# Semantic Scholar Graph API endpoint
 SEMANTIC_SCHOLAR_API_URL = "https://api.semanticscholar.org/graph/v1/paper/search"
 
 class SemanticScholarFetcher(BaseFetcher):
     def __init__(self):
-        # Semantic Scholar can be strict with rate limits, so we use a 3-second delay
-        super().__init__(name="SemanticScholar", rate_limit_delay=3)
+        super().__init__(name="SemanticScholar", rate_limit_delay=5)
+
+    def _create_session(self) -> requests.Session:
+        """Override session creation to provide a much higher backoff factor for Semantic Scholar."""
+        session = requests.Session()
+        retry_strategy = Retry(
+            total=5,
+            backoff_factor=3,  # Delays will be: 0s, 6s, 12s, 24s...
+            status_forcelist=[429, 500, 502, 503, 504],
+            allowed_methods=["GET"]
+        )
+        adapter = HTTPAdapter(max_retries=retry_strategy)
+        session.mount("http://", adapter)
+        session.mount("https://", adapter)
+        return session
 
     def fetch_category(self, category: str) -> List[Paper]:
         logger.info(f"Fetching up to {settings.max_results_per_category} papers from Semantic Scholar for: {category}")
         
-        # Optimize search string
         search_query = category.replace("math.", "") + " mathematics"
         
         params = {

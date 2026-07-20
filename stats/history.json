@@ -16,5 +16,14 @@
             "math.CA": 5,
             "math.LO": 5
         }
+    },
+    "2026-07-20": {
+        "total_fetched": 40,
+        "categories": {
+            "math.NA": 10,
+            "math.RA": 10,
+            "math.CA": 10,
+            "math.LO": 10
+        }
     }
 }

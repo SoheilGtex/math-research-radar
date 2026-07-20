@@ -1,0 +1,362 @@
+[
+    {
+        "id": "http://arxiv.org/abs/2607.16178v1",
+        "title": "Cluster-Aware Matching via Laplacian Optimal Transport",
+        "published": "2026-07-17T17:56:51Z",
+        "summary": "In many applications of matching, the point clouds to be matched are not merely unstructured sets of points but rather samples from distributions with an intrinsic cluster structure. In such cases, as individual points are often interchangeable within a coherent region, finding a robust region-to-region alignment is more desirable than establishing a precise point-to-point correspondence. To this end, we propose a novel approach for cluster-aware matching based on Laplacian Optimal Transport (LapOT). The key idea is to regularize the optimal transport problem with quadratic Laplacian terms constructed from similarity graphs of the point clouds, which encourages the optimal coupling to respect the cluster structure of both point sets. We also introduce Refined Simultaneous Clustering (RSC), a method that leverages the cluster-aware coupling obtained from LapOT to produce consistent partitions across the point sets, which can overcome the limitations of independent clustering and yield more stable and interpretable results. We demonstrate the effectiveness of our approach through theoretical analysis and empirical experiments, showing that LapOT indeed produces cluster-aware matching that leads to more consistent and meaningful alignments between point clouds.",
+        "link": "https://arxiv.org/abs/2607.16178v1",
+        "category": "math.NA",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.16073v1",
+        "title": "The $hp$-FEM does not suffer from the pollution effect for piecewise-smooth Helmholtz problems with Gevrey regularity at boundaries",
+        "published": "2026-07-17T15:57:31Z",
+        "summary": "We consider the $hp$-FEM applied to the Helmholtz scattering problem with wavenumber $k$, truncated with a perfectly-matched layer. The scatterer consists of a combination of Dirichlet, Neumann, and penetrable obstacles together with variable coefficients. Provided that the Helmholtz solution operator is polynomially bounded in $k$, all coefficients are piecewise smooth, all boundary surfaces are Gevrey and all coefficients restricted to boundary surfaces are Gevrey together with all their normal derivatives, we show that the $hp$-FEM is quasioptimal when $p\\geq 1+\\varepsilon \\log k$ and $hk/p$ is sufficiently small; i.e., the $hp$-FEM does not suffer from the pollution effect. This result generalises the analogous results in both [Bernkopf, Chaumont-Frelet, Melenk 2025] (proved for piecewise analytic coefficients and analytic boundaries) and [Galkowski, Lafontaine, Spence, Wunsch 2024] (proved for smooth coefficients that are analytic near analytic obstacles) to a much larger class of scatterers.",
+        "link": "https://arxiv.org/abs/2607.16073v1",
+        "category": "math.NA",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.16044v1",
+        "title": "IMEX Schemes for Compressible Flow using Hybridizable Discontinuous Galerkin Methods",
+        "published": "2026-07-17T15:16:38Z",
+        "summary": "In this work, we develop a geometry-split implicit-explicit (IMEX) framework for the compressible flow equations, wherein stiff regions are treated via an implicit hybridizable discontinuous Galerkin (HDG) method, while non-stiff regions are treated via an explicit discontinuous Galerkin (DG) method. Two implicit formulations are investigated: a mixed HDG method (HDG-MX) and a primal interior-penalty HDG method (HDG-IP). The spatial coupling between the implicit and explicit solutions is achieved in a conservative manner by appropriate interface conditions, while the temporal synchronization is maintained through the use of additive Runge-Kutta (ARK) schemes. We provide a detailed discussion on the computational performance of the resulting IMEX schemes. Verification and validation over a range of numerical experiments confirm that the proposed IMEX schemes achieve high-order accuracy in both space and time. Performance studies further indicate that the approach effectively alleviates geometry-induced stiffness and can provide speedups of up to approximately 50 relative to a fully explicit DG scheme, provided that the implicit region is chosen appropriately.",
+        "link": "https://arxiv.org/abs/2607.16044v1",
+        "category": "math.NA",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.16003v1",
+        "title": "Accelerated Exact Recovery from Noisy Data via Averaging and Noise-Aware Adaptive Bregman-Kaczmarz",
+        "published": "2026-07-17T14:39:17Z",
+        "summary": "The adaptive Bregman-Kaczmarz method recovers the exact, noise-free solution of a linear inverse problem even when every measurement it queries is corrupted, provided the corruption is fresh, independent and zero-mean. A block version was proposed for parallel hardware, but whether larger blocks actually converge faster was left open. We show the answer hinges on how the block is used: replacing the block sum with a block average collapses the analysis onto a single positive-semidefinite matrix, through which we prove that the guaranteed convergence improves monotonically with the batch size, with a total gain governed by the stable rank of the system matrix. We then address heterogeneous noise by introducing a noise-aware weighting that down-weights unreliable measurements, and prove it is strictly better than uniform weighting whenever the noise is not proportional to the row norms - a condition that essentially never holds in practice. The two improvements are compatible and their benefits combine. Finally, we show the adaptive step size interpolates automatically between a fast initial phase and a slowly vanishing tail that carries the error exactly to zero, and we explain how its hyperparameters can be estimated without knowing the true solution. Numerical experiments under sparse, heterogeneous noise illustrate these findings and confirm that the heuristic estimates produce effective step sizes.",
+        "link": "https://arxiv.org/abs/2607.16003v1",
+        "category": "math.NA",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.15934v1",
+        "title": "A Projected Drift-Randomized Milstein Method for SDEs with Non-differentiable and Super-linear Drift Coefficients",
+        "published": "2026-07-17T13:18:29Z",
+        "summary": "We propose a projected drift-randomized Milstein (PRM) method for stochastic differ ential equations with non-differentiable and super-linearly growing drift coefficients. The method extends the randomized Milstein approach beyond the globally Lipschitz setting by incorporating a drift projection into the randomized quadrature approximation. Moreover, unlike existing first-order Milstein-type methods for SDEs with super-linearly growing drift coefficients, the proposed method does not require spatial differentiability of the drift coefficient. Under suitable polynomial Lipschitz and one-sided Lipschitz conditions on the drift, together with standard regularity assumptions on the diffusion, we establish a one-step mean-square stability estimate and derive the required local residual bounds. These esti mates yield first-order strong convergence of the PRM method in the L2-sense. Numerical experiments confirm the theoretical convergence rate and demonstrate the applicability of the method to SDEs with non-differentiable and super-linearly growing drifts.",
+        "link": "https://arxiv.org/abs/2607.15934v1",
+        "category": "math.NA",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.15999v1",
+        "title": "Bounds on Frobenius dimension",
+        "published": "2026-07-17T14:36:33Z",
+        "summary": "In this article, we prove two types of results about the Frobenius dimension of associative algebras. First, we refine the known upper bound for the Frobenius dimension of a finite dimensional algebra in terms of its dimension as a vector space, and show that the only algebras reaching this bound are radical square zero algebras associated with single-vertex quivers. Second, we compute Frobenius dimension for low-dimensional algebras explicitly, and for truncated path algebras in terms of paths with no detours in their underlying quivers.",
+        "link": "https://arxiv.org/abs/2607.15999v1",
+        "category": "math.RA",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.15871v1",
+        "title": "New partial orders on Rickart *-rings",
+        "published": "2026-07-17T11:36:09Z",
+        "summary": "In this paper, we define and study partial orders on a Rickart *-ring obtained by imposing an additional condition on the star and the one-sided star partial orders. For each such order, we show that the down-set of any element is order-isomorphic to a suitable subset of self-adjoint idempotent elements. As an application, we characterize the elements which are below a given element with respect to each of the new orders. We further prove that the down-set of any element is a lattice whenever the ring is regular. We analyze the existence of supremum and infimum of pairs of elements in a regular Rickart *-ring and provide characterizations of these operations whenever they exist. Finally, we extend the latter results for a nonempty subset of elements for regular Baer *-rings.",
+        "link": "https://arxiv.org/abs/2607.15871v1",
+        "category": "math.RA",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.15825v1",
+        "title": "The Mathieu group ${\\sf M}_{12}$ vs ${\\mathbf{SL_3(3)}}$ in characteristic 3",
+        "published": "2026-07-17T10:34:38Z",
+        "summary": "We prove that the principal $3$-blocks of the Mathieu group ${\\sf M_{12}}$ and the special linear group $\\SL_3(3)$ are splendidly Rickard equivalent, and hence derived equivalent, by applying Rickard's theorem whose origin goes back to the second author. As a byproduct we answer to a question on the first Hochschild cohomology of the principal $3$-blocks above posed by W. Murphy.",
+        "link": "https://arxiv.org/abs/2607.15825v1",
+        "category": "math.RA",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.15568v1",
+        "title": "On Generalized von Neumann Inverse Graphs of Finite Commutative Regular Rings",
+        "published": "2026-07-17T02:23:06Z",
+        "summary": "Let $R$ be a ring with identity. The generalized von Neumann inverse graph of $R$, denoted by $Γ_{Reg}(R)$, is defined as the graph whose vertex set is $Reg(R)$, where two distinct vertices $a,b \\in R$ are adjacent if and only if $aba=a$ or $bab=b$. In this work, we consider the reduced graph $Γ'_{Reg}(R)$ obtained by restricting the vertex set to $Reg(R)\\setminus{0_R}$, so that $Γ_{Reg}(R) \\cong K_1 + Γ'_{Reg}(R)$, allowing the analysis to focus on its nontrivial structure. We investigate the structure of $Γ'_{Reg}(R)$ for finite commutative von Neumann regular rings and establish several results describing its graph-theoretic properties in relation to the algebraic structure of $R$. In particular, we derive conditions that characterize connectivity, acyclicity, and planarity, and examine structural features such as vertex degrees, girth, and the existence of pendant vertices, along with their algebraic implications. We also identify circumstances under which $Γ'_{Reg}(R)$ exhibits specific graph classes, including paths, cycles, and wheels, as well as the presence of certain induced subgraphs. Furthermore, an explicit algorithm is provided to construct $Γ'_{Reg}(R)$, and connections with the inclusion ideal graph of $R$ are discussed, offering additional insight into the interplay between ring-theoretic properties and graph structures.",
+        "link": "https://arxiv.org/abs/2607.15568v1",
+        "category": "math.RA",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.15539v1",
+        "title": "Notes on universal C*-algebras",
+        "published": "2026-07-17T01:23:00Z",
+        "summary": "In these notes, we explain in details the construction of the universal C*-algebra as done by Blackadar, starting with the construction of the free *-algebra. At the end, we explain the extension done by Boava and the author to include relations described using the strong operator topology. As an example, we show that a graph C*-algebra can be defined using infinite sums.",
+        "link": "https://arxiv.org/abs/2607.15539v1",
+        "category": "math.RA",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.16185v1",
+        "title": "Sharp decay estimates for $(2+1)$-dimensional oscillatory integral operators via Newton height",
+        "published": "2026-07-17T17:58:32Z",
+        "summary": "We study $(2+1)$-dimensional oscillatory integral operators of the form \\[ T_λf(x,y)=\\int_{\\mathbb{R}}e^{iλP(x,y)t^k}ψ(x,y,t)f(t)dt,\\qquad k\\geq 1, \\] where the phase $P$ is a real-analytic function with a critical point at the origin. We establish the sharp $L^2\\to L^2$ decay rate of $\\frac12\\min\\{1/h_{P}, 1/k\\}$, where $h_{P}$ denotes Varchenko's Newton height of $P$. The two terms in the minimum reflect a natural competition between the spatial degeneracy of $P$ and the temporal degeneracy of $t^k$; their optimality is confirmed by a Knapp-type and a focusing example, respectively. A $TT^{*}$ reduction transforms the $L^2$ estimate into a scalar oscillatory integral, allowing Varchenko's theorem to apply directly. Building on this foundation, complex interpolation yields the sharp $L^2\\to L^{2k+2}$ bound. Finally, in the regime $h_{P}\\geq k$, we obtain sharp $L^2\\to L^p$ decay estimates for all $p$.",
+        "link": "https://arxiv.org/abs/2607.16185v1",
+        "category": "math.CA",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.16113v1",
+        "title": "Sharp L^4 restriction estimates for surfaces of codimension two in R^5",
+        "published": "2026-07-17T16:45:30Z",
+        "summary": "We prove $L^p\\rightarrow L^4$ Fourier adjoint restriction estimates for three-dimensional quadratic surfaces in $\\mathbb{R}^5$. These estimates are sharp up to the endpoint, and improve results by Oberlin and Guo--Oh.",
+        "link": "https://arxiv.org/abs/2607.16113v1",
+        "category": "math.CA",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.16064v1",
+        "title": "Pointwise Convergence of Ergodic Averages Along Integer Cantor Sets",
+        "published": "2026-07-17T15:44:52Z",
+        "summary": "Let $d \\geq 3$,   \\[ D \\subsetneq \\{ 0,1,\\dots,d-1\\}, \\qquad |D| \\geq 2, \\ 0 \\in D \\]   be a finite alphabet, and define the integer Cantor set   \\begin{align} \\mathcal{C} := \\mathcal{C}_{D} := \\bigcup_{J \\geq 0} \\Big\\{ \\sum_{j =0}^J a_j d^j : a_j \\in D \\Big\\}.   \\end{align} We prove that for any $σ$-finite measure-preserving system, $(X,μ,T)$, and any $f \\in L^p(X)$, $2\\leq p<\\infty$, the ergodic averages \\begin{align}   \\frac{1}{|\\mathcal{C}_N|} \\sum_{n \\in \\mathcal{C}_N } f(T^n x), \\qquad \\mathcal{C}_N := \\mathcal{C} \\cap \\{1,2,\\dots,N \\} \\end{align}   converge $μ$-almost everywhere. By rescaling, this allows us to resolve the question of lacunary differentiation of Cantor measures at self-similar scales: if \\begin{align}   \\mathcal{C}' := \\Big\\{ \\sum_{j \\geq 1} a_j d^{-j} : a_j \\in D \\Big\\} \\subset [0,1] \\end{align} is a real-variable Cantor set, and $ν$ denotes its natural measure, then we prove that \\begin{align}   \\lim_{k \\to \\infty} \\int f(x-d^{-k} t) \\ dν(t) = f(x) \\end{align} Lebesgue almost-everywhere for any $f \\in L^2_{\\text{loc}}(\\mathbb{R})$.",
+        "link": "https://arxiv.org/abs/2607.16064v1",
+        "category": "math.CA",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.16029v1",
+        "title": "Quantum Mechanics on Lie Groups: II. Path Integrals",
+        "published": "2026-07-17T15:01:45Z",
+        "summary": "We continue our study of quantum dynamics on a Lie group $G$, initiated in arXiv:2512.19840, by building the path integral that governs transition amplitudes in the Hilbert space $L^2(G)$. This relies on the proper handling of both a noncommutative momentum space and the presence of compact directions in $G$. We show that compactness can be handled through a sum over winding numbers in maximal tori of $G$, generalizing the similar sum commonly encountered for path integrals on a circle. As applications, we compute semiclassical approximations of propagators and partition functions of Euler-Arnold systems, up to (and including) two-loop order.",
+        "link": "https://arxiv.org/abs/2607.16029v1",
+        "category": "math.CA",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.15966v1",
+        "title": "Canonical Mandelbrot Cascades on Curves Are Rajchman",
+        "published": "2026-07-17T13:53:14Z",
+        "summary": "We settle the Rajchman problem for canonical scalar dyadic Mandelbrot cascades at the minimal Kahane--Peyrière integrability threshold. If $μ$ is the cascade on $[0,1]$, then $\\widehatμ(ξ)\\to 0$ as $|ξ|\\to\\infty$, almost surely on non-extinction. For every fixed nondegenerate $C^2$ embedded arc $γ:[0,1]\\to\\mathbb{R}^2$, the pushforward $γ_\\#μ$ is likewise Rajchman almost surely on non-extinction. The analogous conclusion holds for the scalar cascade on the parameter circle pushed forward by any fixed nondegenerate $C^2$ Jordan curve. No moment condition of order strictly greater than one is imposed; in particular, the results include the regime $\\mathbb{E}[W^q]=\\infty$ for every $q>1$.   The proof combines a spine-based lower-deviation principle, adaptive terminal approximation, and predictable capping to obtain almost-sure estimates uniform over large frequency annuli without higher moments. For curved pushforwards, an endpoint-safe phase decomposition controls direction-dependent stationary regions, including those meeting the endpoints of an arc, and couples the geometric and probabilistic arguments through a common dyadic kernel. Combined with the exact Fourier-dimension formulas for the corresponding models, the theorems show that Rajchman decay persists at zero Fourier dimension.",
+        "link": "https://arxiv.org/abs/2607.15966v1",
+        "category": "math.CA",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.15958v1",
+        "title": "Logical Metatheorems for Abstract Spaces axiomatized in Positive Bounded Logic II: Metric spaces and the model-theoretic uniformity principle",
+        "published": "2026-07-17T13:46:47Z",
+        "summary": "We extend the proof-theoretic treatment of uniform bound extraction from normed structures axiomatized in positive bounded logic [Advances in Mathematics, 290:503-551, 2016] (as developed for the model theory of Banach spaces) to the more general setting of abstract metric structures, including discrete structures viewed as classical first-order models. In particular, we establish uniform bound extraction theorems for our generalized framework for $\\forall\\exists$-sentences whose matrix is the negation of (an embedding of) a formula in positive bounded logic, whose proofs use saturation. In this way, we provide a formal explanation for the successes in the extraction of uniform bounds from nonstandard proofs given in [Advances in Mathematics, 343:567-623, 2019], which had informally followed the perspective of the monotone functional interpretation. As an application of the formal framework we develop, we provide novel explicit bounds for a structural theorem for stable subsets of groups given in [Mathematical Proceedings of the Cambridge Philosophical Society, 168(2):405-413, 2020].",
+        "link": "https://arxiv.org/abs/2607.15958v1",
+        "category": "math.LO",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.15723v1",
+        "title": "Paraconsistent Dominated Convergence",
+        "published": "2026-07-17T07:56:46Z",
+        "summary": "The Levi-Civita field $\\mathcal{R}$ of formal Laurent series is a constructive, non-Archimedean ordered field that supports a full Lebesgue measure and integration theory, including a Dominated Convergence Theorem. This paper embeds that integration theory into the paraconsistent Chunk and Permeate framework, extending it from elementary calculus to genuine measure theory. The source chunk is modelled by $\\mathcal{R}$ with its measure and integral, while the target chunk is the classical real line $\\mathbb{R}$. A permeability relation exports the standard part of the internal integral, and it is shown that the Dominated Convergence Theorem permeates from the source chunk to the target chunk, yielding the classical Lebesgue Dominated Convergence Theorem without any choice principles and without the ultrafilters required by nonstandard measure theory. The construction is entirely explicit and demonstrates that paraconsistent logic can provide a rigorous foundation for deep analytical tools while keeping inconsistencies safely confined.",
+        "link": "https://arxiv.org/abs/2607.15723v1",
+        "category": "math.LO",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.15664v1",
+        "title": "Semantics for the minimal well-determined logic",
+        "published": "2026-07-17T06:19:06Z",
+        "summary": "The minimal well-determined logic in the language with conjunction and implication is investigated. A calculus for this logic, in which the modus ponens rule is not postulated, is proposed. The main result consists in constructing a semantics for this logic: it is formed by the class of lower semilattices with a greatest element, where the implication is interpreted using a partial function defined via the partial order of the semilattice. This extension of the notion of interpreting logical connectives in a matrix allows for the correct determination of the truth of formulas in the language with conjunction and implication. Soundness and completeness theorems are proved. The proposed semantics creates an opportunity to investigate questions of finite model property for such systems and can also serve as a basis for studying other properties of both the minimal well-determined logic itself and its extensions. As an application of the obtained results, we prove that the set of tautologies of the minimal well-determined logic is decidable in polynomial time and present a corresponding decision algorithm.",
+        "link": "https://arxiv.org/abs/2607.15664v1",
+        "category": "math.LO",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.15583v1",
+        "title": "Distributed Continuous Aerial Surveillance by UAS Swarms Under Formal Mission Specifications",
+        "published": "2026-07-17T03:06:36Z",
+        "summary": "Persistent aerial surveillance using multi-unmanned aerial systems (UASs) requires decentralized coordination, continuous team reconfiguration, and provable mission correctness despite limited onboard energy and communication constraints. This paper develops a distributed framework for continuous aerial surveillance under bounded Linear Temporal Logic (LTL) mission specifications. The proposed approach partitions the UAS team into stationary anchors and mobile workers operating under cyclic replacement modes, and constructs a deep neural network (DNN)-inspired communication topology that enables fully decentralized coordination through local interactions. A hierarchical bounded LTL specification formally captures mode-to-mode reference consistency, cyclic team rotation, finite-time reachability, trajectory tracking, and prescribed surveillance coverage. By proving the finite-time convergence of the worker-agent coordination dynamics, the paper guarantees the finite-time satisfaction of the mission specification. To maximize sensing effectiveness, an information-theoretic optimization framework synthesizes the reference configuration of newly deployed worker agents by minimizing the Kullback--Leibler divergence between the surveillance-node distribution and the induced coverage density. The resulting reference configuration uniquely determines a deterministic, mode-dependent communication topology, eliminating online communication-graph optimization while preserving the formal mission guarantees. Finally, a decentralized quadrotor controller realizes the distributed references using only local communication. Numerical simulations demonstrate cyclic team reconfiguration, decentralized communication-topology synthesis, finite-time formation convergence, and certified persistent surveillance coverage.",
+        "link": "https://arxiv.org/abs/2607.15583v1",
+        "category": "math.LO",
+        "source": "arxiv"
+    },
+    {
+        "id": "http://arxiv.org/abs/2607.15558v1",
+        "title": "Locatedness, Convexity, and Integrability in $\\mathbb{R}^N$",
+        "published": "2026-07-17T01:57:57Z",
+        "summary": "We give an improved, detailed presentation of the constructive proof of the following corrected version of Theorem 2 of Locatedness, Convexity, and Lebesgue measurability: Let $\\mathbf{S}$ be a Lebesgue integrable complemented set in $\\mathbb{R}^N$ such that $μ(\\mathbf{S})>0$ and $S^1$ is both bounded and convex. Then $S^1$ is totally bounded and hence located in $\\mathbb{R}^N$.",
+        "link": "https://arxiv.org/abs/2607.15558v1",
+        "category": "math.LO",
+        "source": "arxiv"
+    },
+    {
+        "id": "10.1186/s12877-026-08015-3",
+        "title": "Association of surgical timing with 30-day independent ambulation and postoperative sleep disorder in elderly patients undergoing joint replacement: an exploratory secondary analysis of a prospective cohort",
+        "published": "2026-07-20T15:48:27Z",
+        "summary": "No abstract provided by Crossref.",
+        "link": "https://doi.org/10.1186/s12877-026-08015-3",
+        "category": "math.NA",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1039/d6nr00246c",
+        "title": "Bias-free solar to ammonia production                     <i>via</i>                     integrated perovskite–organic tandem photovoltaics",
+        "published": "2026-07-20T15:45:17Z",
+        "summary": "<jats:p>                     A mixed Al                     <jats:sub>2</jats:sub>                     O                     <jats:sub>3</jats:sub>                     /Meo-4PACz hole-selective layer enables 22.85% perovskite/organic tandem photovoltaics with a 2.13 V photovoltage. The PV-EC system achieves bias-free nitrate-to-ammonia conversion with 3.7% solar-to-ammonia efficiency.                   </jats:p>",
+        "link": "https://doi.org/10.1039/d6nr00246c",
+        "category": "math.NA",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1137/24m1690497",
+        "title": "Logarithmic Regret in the Ergodic Avellaneda–Stoikov Market Making Model",
+        "published": "2026-07-20T15:44:58Z",
+        "summary": "<jats:p>Abstract.</jats:p>                   <jats:p>We analyze the regret arising from learning the price sensitivity parameter [Formula: see text] of liquidity takers in the ergodic version of the Avellaneda–Stoikov market making model. We show that a learning algorithm based on a maximum-likelihood estimator for the parameter achieves the regret upper bound of order [Formula: see text] in expectation. To obtain the result we need two key ingredients. The first is the twice differentiability of the ergodic constant under the misspecified parameter in the Hamilton–Jacobi–Bellman equation with respect to [Formula: see text], which leads to a second-order performance gap. The second is the learning rate of the regularized maximum-likelihood estimator which is obtained from concentration inequalities for Bernoulli signals. Numerical experiments confirm the convergence and the robustness of the proposed algorithm.</jats:p>",
+        "link": "https://doi.org/10.1137/24m1690497",
+        "category": "math.NA",
+        "source": "crossref"
+    },
+    {
+        "id": "10.11606/003309526",
+        "title": "A farmacogenômica na triagem neonatal ; impactos do teste do pezinho ampliado no tratamento personalizado",
+        "published": "2026-07-20T15:44:52Z",
+        "summary": "<jats:p>INTRODUÇÃO: A triagem neonatal é um dos programas mais eficazes de saúde pública para o diagnóstico precoce de doenças metabólicas e genéticas. No Brasil, o Programa Nacional de Triagem Neonatal (PNTN) ampliou, pela Lei no 14.154/2021, o rastreamento de 6 para até 50 doenças no Teste do Pezinho, permitindo intervenções precoces e maior equidade no acesso. Paralelamente, a farmacogenômica (PGx) emerge como área capaz de identificar variações genéticas que modulam a resposta a medicamentos, favorecendo tratamentos individualizados com melhor eficácia. OBJETIVO: Discutir a viabilidade da integração da farmacogenômica ao Teste do Pezinho ampliado, destacando benefícios clínicos e os desafios técnicos, éticos e econômicos para sua implementação no Sistema Único de Saúde (SUS). MÉTODOS: Realizou-se uma revisão narrativa de literatura em bases como a Biblioteca Nacional de Medicina dos Estados Unidos (PubMed), a Biblioteca Eletrônica Científica Online (SciELO), a Base de Dados de Farmacogenômica (PharmGKB) e em documentos oficiais do Ministério da Saúde, abrangendo publicações de 2015 a 2025. Foram utilizadas palavras-chave relacionadas aos temas \"teste do pezinho\" e \"farmacogenômica\". Analisaram-se evidências sobre a evolução da triagem neonatal, a aplicabilidade clínica da farmacogenômica e experiências internacionais, como o Projeto BabySeq e o Consórcio de Sequenciamento Neonatal em Medicina Genômica Saúde Pública (NSIGHT). RESULTADOS: A literatura evidencia que a farmacogenômica pode reduzir reações adversas e otimizar a eficácia terapêutica ao considerar variantes em genes como TPMT (Tiopurina S-Metiltransferase), NUDT15 (Nudix Hidrolase 15), DPYD (Dihidropirimidina Desidrogenase), CYP2D6 (Citocromo P450 Família 2 Subfamília D Membro 6) e CYP2C19 (Citocromo P450 Família 2 Subfamília C Membro 19). Experiências internacionais demonstram||viabilidade técnica e impacto positivo, embora no Brasil persistam desafios relacionados à infraestrutura laboratorial, à governança ética e à desigualdade de acesso a tecnologias genômicas. CONCLUSÃO: A integração da farmacogenômica à triagem neonatal representará um avanço promissor rumo à medicina personalizada no Sistema Único de Saúde. Sua implementação progressiva, iniciando-se em centros de referência e apoiada por políticas públicas, pode ampliar a segurança terapêutica, reduzir eventos adversos e consolidar um modelo de cuidado preventivo e humanizado desde os primeiros dias de vida</jats:p>",
+        "link": "https://doi.org/10.11606/003309526",
+        "category": "math.NA",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1016/s1875-5364(26)61195-8",
+        "title": "Genistein inhibits oxidative stress and alleviates vascular remodeling in hypertension through the GSK3β/FYN/Nrf2 pathway",
+        "published": "2026-07-20T15:42:05Z",
+        "summary": "No abstract provided by Crossref.",
+        "link": "https://doi.org/10.1016/s1875-5364(26)61195-8",
+        "category": "math.NA",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1137/24m1690497",
+        "title": "Logarithmic Regret in the Ergodic Avellaneda–Stoikov Market Making Model",
+        "published": "2026-07-20T15:44:58Z",
+        "summary": "<jats:p>Abstract.</jats:p>                   <jats:p>We analyze the regret arising from learning the price sensitivity parameter [Formula: see text] of liquidity takers in the ergodic version of the Avellaneda–Stoikov market making model. We show that a learning algorithm based on a maximum-likelihood estimator for the parameter achieves the regret upper bound of order [Formula: see text] in expectation. To obtain the result we need two key ingredients. The first is the twice differentiability of the ergodic constant under the misspecified parameter in the Hamilton–Jacobi–Bellman equation with respect to [Formula: see text], which leads to a second-order performance gap. The second is the learning rate of the regularized maximum-likelihood estimator which is obtained from concentration inequalities for Bernoulli signals. Numerical experiments confirm the convergence and the robustness of the proposed algorithm.</jats:p>",
+        "link": "https://doi.org/10.1137/24m1690497",
+        "category": "math.RA",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1016/j.aml.2026.110068",
+        "title": "Mixed-precision fully-connected tensor network decomposition",
+        "published": "2026-07-20T15:03:38Z",
+        "summary": "No abstract provided by Crossref.",
+        "link": "https://doi.org/10.1016/j.aml.2026.110068",
+        "category": "math.RA",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1016/j.physleta.2026.132013",
+        "title": "The influence of strong coupling between single-photon source and spectral filter on photon statistics",
+        "published": "2026-07-20T15:03:08Z",
+        "summary": "No abstract provided by Crossref.",
+        "link": "https://doi.org/10.1016/j.physleta.2026.132013",
+        "category": "math.RA",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1007/s40879-026-00910-8",
+        "title": "Nonlocal elliptic systems via nonlinear Rayleigh quotient with general coupling nonlinearities",
+        "published": "2026-07-20T14:49:25Z",
+        "summary": "No abstract provided by Crossref.",
+        "link": "https://doi.org/10.1007/s40879-026-00910-8",
+        "category": "math.RA",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1134/s1995080226616838",
+        "title": "Data Augmentation Procedure for Improving Efficiency of Anomaly Detection Models in a Multidimensional Stochastic Process with Continuous Time",
+        "published": "2026-07-20T14:31:42Z",
+        "summary": "No abstract provided by Crossref.",
+        "link": "https://doi.org/10.1134/s1995080226616838",
+        "category": "math.RA",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1137/24m1690497",
+        "title": "Logarithmic Regret in the Ergodic Avellaneda–Stoikov Market Making Model",
+        "published": "2026-07-20T15:44:58Z",
+        "summary": "<jats:p>Abstract.</jats:p>                   <jats:p>We analyze the regret arising from learning the price sensitivity parameter [Formula: see text] of liquidity takers in the ergodic version of the Avellaneda–Stoikov market making model. We show that a learning algorithm based on a maximum-likelihood estimator for the parameter achieves the regret upper bound of order [Formula: see text] in expectation. To obtain the result we need two key ingredients. The first is the twice differentiability of the ergodic constant under the misspecified parameter in the Hamilton–Jacobi–Bellman equation with respect to [Formula: see text], which leads to a second-order performance gap. The second is the learning rate of the regularized maximum-likelihood estimator which is obtained from concentration inequalities for Bernoulli signals. Numerical experiments confirm the convergence and the robustness of the proposed algorithm.</jats:p>",
+        "link": "https://doi.org/10.1137/24m1690497",
+        "category": "math.CA",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1515/9783111651354-024",
+        "title": "24 Freistellung von der Arbeitsleistung wegen Tätigkeit für kirchliche Mitarbeitervertretung, ArbG München, Urteil vom 11.5.2023 (31 Ca 9426/22)",
+        "published": "2026-07-20T15:33:16Z",
+        "summary": "No abstract provided by Crossref.",
+        "link": "https://doi.org/10.1515/9783111651354-024",
+        "category": "math.CA",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1515/9781501518508",
+        "title": "The Sacred and the Profane in Premodern Icelandic Literature, ca. 1500–1800",
+        "published": "2026-07-20T15:31:17Z",
+        "summary": "No abstract provided by Crossref.",
+        "link": "https://doi.org/10.1515/9781501518508",
+        "category": "math.CA",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1515/9781501518508-toc",
+        "title": "Contents",
+        "published": "2026-07-20T15:31:17Z",
+        "summary": "No abstract provided by Crossref.",
+        "link": "https://doi.org/10.1515/9781501518508-toc",
+        "category": "math.CA",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1515/9781501518508-fm",
+        "title": "Frontmatter",
+        "published": "2026-07-20T15:31:17Z",
+        "summary": "No abstract provided by Crossref.",
+        "link": "https://doi.org/10.1515/9781501518508-fm",
+        "category": "math.CA",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1137/24m1690497",
+        "title": "Logarithmic Regret in the Ergodic Avellaneda–Stoikov Market Making Model",
+        "published": "2026-07-20T15:44:58Z",
+        "summary": "<jats:p>Abstract.</jats:p>                   <jats:p>We analyze the regret arising from learning the price sensitivity parameter [Formula: see text] of liquidity takers in the ergodic version of the Avellaneda–Stoikov market making model. We show that a learning algorithm based on a maximum-likelihood estimator for the parameter achieves the regret upper bound of order [Formula: see text] in expectation. To obtain the result we need two key ingredients. The first is the twice differentiability of the ergodic constant under the misspecified parameter in the Hamilton–Jacobi–Bellman equation with respect to [Formula: see text], which leads to a second-order performance gap. The second is the learning rate of the regularized maximum-likelihood estimator which is obtained from concentration inequalities for Bernoulli signals. Numerical experiments confirm the convergence and the robustness of the proposed algorithm.</jats:p>",
+        "link": "https://doi.org/10.1137/24m1690497",
+        "category": "math.LO",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1016/j.chemolab.2026.105828",
+        "title": "A Chemometric Approach to Evaluating the Mechanical Properties of Castable Refractory Ceramics for the Aluminium Foundry Industry",
+        "published": "2026-07-20T15:35:18Z",
+        "summary": "No abstract provided by Crossref.",
+        "link": "https://doi.org/10.1016/j.chemolab.2026.105828",
+        "category": "math.LO",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1016/j.ufug.2026.129609",
+        "title": "Selecting temperate urban trees for resistance to drought: relevance of leaf turgor loss point",
+        "published": "2026-07-20T15:08:03Z",
+        "summary": "No abstract provided by Crossref.",
+        "link": "https://doi.org/10.1016/j.ufug.2026.129609",
+        "category": "math.LO",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1016/j.aml.2026.110068",
+        "title": "Mixed-precision fully-connected tensor network decomposition",
+        "published": "2026-07-20T15:03:38Z",
+        "summary": "No abstract provided by Crossref.",
+        "link": "https://doi.org/10.1016/j.aml.2026.110068",
+        "category": "math.LO",
+        "source": "crossref"
+    },
+    {
+        "id": "10.1016/j.physleta.2026.132013",
+        "title": "The influence of strong coupling between single-photon source and spectral filter on photon statistics",
+        "published": "2026-07-20T15:03:08Z",
+        "summary": "No abstract provided by Crossref.",
+        "link": "https://doi.org/10.1016/j.physleta.2026.132013",
+        "category": "math.LO",
+        "source": "crossref"
+    }
+]

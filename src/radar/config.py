@@ -9,15 +9,14 @@ logger = logging.getLogger(__name__)
 @dataclass
 class RadarConfig:
     """Structured configuration object for the Radar platform."""
-    # Data fetching limits and settings
     categories: List[str] = field(default_factory=lambda: ["math.NA", "math.LO"])
     max_results_per_category: int = 5
     timeout_seconds: int = 15
     
-    # Centralized storage paths
     papers_dir: str = "papers"
     stats_dir: str = "stats"
     docs_dir: str = "docs"
+    cache_dir: str = "cache"  # <-- فیلد جدید اضافه شد
 
 def load_config(config_path: str = "config.json") -> RadarConfig:
     """Load configuration settings from a JSON file and return a structured object."""
@@ -37,5 +36,4 @@ def load_config(config_path: str = "config.json") -> RadarConfig:
         logger.error(f"Failed to parse {config_path}: {e}. Using defaults.")
         return RadarConfig()
 
-# Export a default instance to be imported across the application
 settings = load_config()

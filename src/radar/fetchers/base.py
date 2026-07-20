@@ -9,6 +9,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 from radar.config import settings
+from radar.deduplication.filter import filter_new_papers
 from radar.models import Paper
 from radar.storage.json import save_papers
 
@@ -58,6 +59,11 @@ class BaseFetcher(abc.ABC):
                 logger.error(f"Error fetching {cat} from {self.name}: {e}")
             
         if all_fetched_papers:
-            today_str = datetime.now().strftime("%Y-%m-%d")
-            filename = f"{today_str}.json"
-            save_papers(all_fetched_papers, filename)
+            # Enforce global deduplication before storage
+            novel_papers = filter_new_papers(all_fetched_papers)
+            if novel_papers:
+                today_str = datetime.now().strftime("%Y-%m-%d")
+                filename = f"{today_str}.json"
+                save_papers(novel_papers, filename)
+            else:
+                logger.info(f"No novel papers found for {self.name} across all categories.")

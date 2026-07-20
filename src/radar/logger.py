@@ -1,6 +1,7 @@
-import os
 import logging
+import os
 from logging.handlers import RotatingFileHandler
+
 
 def setup_global_logger() -> logging.Logger:
     """

@@ -5,6 +5,7 @@ from radar.dashboard.generator import build_dashboard
 from radar.fetchers.arxiv import run_arxiv_pipeline
 from radar.fetchers.crossref import run_crossref_pipeline
 from radar.fetchers.openalex import run_openalex_pipeline
+from radar.fetchers.semantic_scholar import run_semantic_scholar_pipeline
 from radar.logger import setup_global_logger
 from radar.reporting.readme import generate_readme
 
@@ -35,6 +36,13 @@ def main():
         logger.info("✅ Finished OpenAlex Fetcher successfully.\n")
     except Exception as e:
         logger.error(f"❌ Pipeline failed during OpenAlex fetch: {e}")
+
+    logger.info("🚀 Running Module: Semantic Scholar Fetcher...")
+    try:
+        run_semantic_scholar_pipeline()
+        logger.info("✅ Finished Semantic Scholar Fetcher successfully.\n")
+    except Exception as e:
+        logger.error(f"❌ Pipeline failed during Semantic Scholar fetch: {e}")
         
     # --- ANALYTICS & REPORTING STAGE ---
     logger.info("🚀 Running Module: Analytics Generator...")

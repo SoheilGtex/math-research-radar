@@ -18,12 +18,21 @@
         }
     },
     "2026-07-20": {
-        "total_fetched": 40,
+        "total_fetched": 75,
+        "categories": {
+            "math.NA": 25,
+            "math.RA": 20,
+            "math.CA": 14,
+            "math.LO": 16
+        }
+    },
+    "2026-07-21": {
+        "total_fetched": 18,
         "categories": {
             "math.NA": 10,
-            "math.RA": 10,
-            "math.CA": 10,
-            "math.LO": 10
+            "math.RA": 4,
+            "math.CA": 3,
+            "math.LO": 1
         }
     }
 }

@@ -1,0 +1,29 @@
+# Git
+.git
+.gitignore
+
+# Python & Environment
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# Testing & Linting
+.pytest_cache/
+.ruff_cache/
+
+# Local Data & State (These should be mounted as volumes, not baked into the image)
+papers/
+stats/
+docs/
+cache/
+
+# GitHub Actions
+.github/
+
+# macOS
+.DS_Store

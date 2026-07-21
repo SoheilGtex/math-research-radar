@@ -16,11 +16,9 @@ env/
 .pytest_cache/
 .ruff_cache/
 
-# Local Data & State (These should be mounted as volumes, not baked into the image)
-papers/
-stats/
+# Local Data & State (Consolidated)
+data/
 docs/
-cache/
 
 # GitHub Actions
 .github/

@@ -15,12 +15,13 @@ services:
       - PYTHONUNBUFFERED=1
       - APP_ENV=production
     volumes:
-      # Bind mounts to persist generated data onto the host machine
-      - ./papers:/app/papers
-      - ./stats:/app/stats
+      # Bind mounts to persist generated data into the unified host data/ directory
+      - ./data/papers:/app/papers
+      - ./data/stats:/app/stats
+      - ./data/cache:/app/cache
+      - ./data/logs:/app/logs
+      # Keep docs at root for GitHub Pages compatibility
       - ./docs:/app/docs
-      - ./cache:/app/cache
-      - ./logs:/app/logs
       - ./README.md:/app/README.md
     networks:
       - radar_network

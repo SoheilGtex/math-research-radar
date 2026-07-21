@@ -1,0 +1,79 @@
+services:
+  # --------------------------------------------------------
+  # Core Data Extraction Pipeline
+  # --------------------------------------------------------
+  radar-engine:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: math-research-radar:latest
+    container_name: radar_engine
+    # The pipeline is a batch job that runs and exits. 
+    # It should not be restarted automatically upon completion.
+    restart: "no"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - APP_ENV=production
+    volumes:
+      # Bind mounts to persist generated data onto the host machine
+      - ./papers:/app/papers
+      - ./stats:/app/stats
+      - ./docs:/app/docs
+      - ./cache:/app/cache
+      - ./logs:/app/logs
+    networks:
+      - radar_network
+
+  # --------------------------------------------------------
+  # Future Architecture Blueprint (Commented for upcoming phases)
+  # --------------------------------------------------------
+  
+  # postgres_db:
+  #   image: postgres:16-alpine
+  #   container_name: radar_db
+  #   environment:
+  #     - POSTGRES_USER=radar_user
+  #     - POSTGRES_PASSWORD=secure_password
+  #     - POSTGRES_DB=math_radar
+  #   volumes:
+  #     - pg_data:/var/lib/postgresql/data
+  #   networks:
+  #     - radar_network
+
+  # redis_cache:
+  #   image: redis:7-alpine
+  #   container_name: radar_redis
+  #   networks:
+  #     - radar_network
+
+  # fastapi_service:
+  #   build:
+  #     context: ./future/fastapi
+  #   container_name: radar_api
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - postgres_db
+  #     - redis_cache
+  #   networks:
+  #     - radar_network
+
+  # nextjs_dashboard:
+  #   build:
+  #     context: ./future/dashboard
+  #   container_name: radar_dashboard
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - fastapi_service
+  #   networks:
+  #     - radar_network
+
+networks:
+  radar_network:
+    name: radar_internal_network
+    driver: bridge
+
+# volumes:
+#   pg_data:
+#     name: radar_postgres_data

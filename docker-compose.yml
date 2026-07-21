@@ -21,6 +21,7 @@ services:
       - ./docs:/app/docs
       - ./cache:/app/cache
       - ./logs:/app/logs
+      - ./README.md:/app/README.md
     networks:
       - radar_network
 

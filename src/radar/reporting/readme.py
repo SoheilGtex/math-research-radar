@@ -1,6 +1,5 @@
 import logging
 import re
-
 from sqlalchemy import desc
 
 from radar.db import SessionLocal
@@ -15,7 +14,7 @@ def generate_readme() -> None:
         # Fetch the 5 most recently added papers from the database
         latest_papers = db.query(Paper).order_by(desc(Paper.created_at)).limit(5).all()
         
-        latest_papers_text = "### 📄 Latest Discovered Papers\n\n"
+        latest_papers_text = "\n### 📄 Latest Discovered Papers\n\n"
         if not latest_papers:
             latest_papers_text += "*No papers found in the database yet.*\n"
         else:
@@ -28,14 +27,15 @@ def generate_readme() -> None:
             with open("README.md", "r", encoding="utf-8") as f:
                 content = f.read()
                 
-            # Regex to find and replace the dynamic block
+            # Bulletproof regex: finds the tags regardless of newlines or spaces between them
             pattern = re.compile(
-                r"(<!-- LATEST_PAPERS_START -->\n)(.*?)(\n<!-- LATEST_PAPERS_END -->)", 
-                re.DOTALL
+                r"(<!-- LATEST_PAPERS_START -->)[\s\S]*?(<!-- LATEST_PAPERS_END -->)", 
+                re.IGNORECASE
             )
             
             if pattern.search(content):
-                new_content = pattern.sub(rf"\1{latest_papers_text}\3", content)
+                # Inject the new content with guaranteed newlines
+                new_content = pattern.sub(rf"\1{latest_papers_text}\n\2", content)
                 with open("README.md", "w", encoding="utf-8") as f:
                     f.write(new_content)
                 logger.info("Successfully updated the dynamic section of README.md from PostgreSQL.")

@@ -1,6 +1,6 @@
 services:
   # --------------------------------------------------------
-  # Core Data Extraction Pipeline
+  # Core Data Extraction Pipeline (Runs on demand)
   # --------------------------------------------------------
   radar-engine:
     build:
@@ -12,7 +12,6 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - APP_ENV=production
-      # DB Connection string for the orchestrator
       - DATABASE_URL=postgresql://radar_user:secure_password@radar_db:5432/math_radar
     volumes:
       - ./data/papers:/app/papers
@@ -40,43 +39,34 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      # Map database files to our unified data/ directory
       - ./data/postgres:/var/lib/postgresql/data
     networks:
       - radar_network
 
   # --------------------------------------------------------
-  # Future Architecture Blueprint (Commented for upcoming phases)
+  # API Service Layer
   # --------------------------------------------------------
-  
-  # redis_cache:
-  #   image: redis:7-alpine
-  #   container_name: radar_redis
-  #   networks:
-  #     - radar_network
+  fastapi_service:
+    build:
+      context: ./future/fastapi
+      dockerfile: Dockerfile
+    container_name: radar_api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      # Instruct FastAPI to connect to radar_db using Docker's internal DNS
+      - DATABASE_URL=postgresql://radar_user:secure_password@radar_db:5432/math_radar
+    depends_on:
+      - postgres_db
+    networks:
+      - radar_network
 
-  # fastapi_service:
-  #   build:
-  #     context: ./future/fastapi
-  #   container_name: radar_api
-  #   ports:
-  #     - "8000:8000"
-  #   depends_on:
-  #     - postgres_db
-  #     - redis_cache
-  #   networks:
-  #     - radar_network
-
-  # nextjs_dashboard:
-  #   build:
-  #     context: ./future/dashboard
-  #   container_name: radar_dashboard
-  #   ports:
-  #     - "3000:3000"
-  #   depends_on:
-  #     - fastapi_service
-  #   networks:
-  #     - radar_network
+  # --------------------------------------------------------
+  # Future Architecture Blueprint (Commented)
+  # --------------------------------------------------------
+  # redis_cache: ...
+  # nextjs_dashboard: ...
 
 networks:
   radar_network:

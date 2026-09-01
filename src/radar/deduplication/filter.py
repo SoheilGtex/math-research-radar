@@ -10,34 +10,36 @@ logger = logging.getLogger(__name__)
 
 def filter_new_papers(papers: List[Paper]) -> List[Paper]:
     """
-    Filter out papers that have already been stored in the PostgreSQL database.
+    Filter out intra-batch duplicates and papers already stored in PostgreSQL.
     This replaces the legacy file-based 'seen_ids.json' cache.
     """
     if not papers:
         return []
 
-    # Extract all incoming paper IDs
-    incoming_ids = [paper.id for paper in papers]
+    # 1. Intra-batch deduplication (keep the first occurrence of each ID)
+    unique_incoming_dict = {}
+    for p in papers:
+        if p.id not in unique_incoming_dict:
+            unique_incoming_dict[p.id] = p
+            
+    unique_papers = list(unique_incoming_dict.values())
+    incoming_ids = list(unique_incoming_dict.keys())
     
     db = SessionLocal()
     try:
-        # Query the database for IDs that already exist among the incoming IDs
-        # Using with_entities to only fetch the primary key for performance
+        # 2. Database deduplication (check against historical data)
         existing_records = db.query(Paper.id).filter(Paper.id.in_(incoming_ids)).all()
-        # Flatten the result list of tuples into a simple set
         existing_ids = {record[0] for record in existing_records}
         
     except SQLAlchemyError as e:
         logger.error(f"Database error during deduplication: {e}")
-        # Fail safe: if DB fails, assume none exist to avoid losing data 
-        # (the db.merge in storage layer will handle conflicts anyway)
         existing_ids = set()
     finally:
         db.close()
 
-    # Filter out papers whose ID is already in the database
-    new_papers = [paper for paper in papers if paper.id not in existing_ids]
+    # 3. Final filtering
+    new_papers = [paper for paper in unique_papers if paper.id not in existing_ids]
 
-    logger.info(f"Deduplication complete: found {len(new_papers)} novel papers out of {len(papers)}.")
+    logger.info(f"Deduplication complete: found {len(new_papers)} novel papers out of {len(papers)} originally fetched.")
     
     return new_papers

@@ -63,3 +63,5 @@ data/postgres/
 data/stats/*.json
 data/papers/*.json
 data/logs/
+# Docker volumes & Database state
+data/

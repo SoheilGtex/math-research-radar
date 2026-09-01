@@ -12,15 +12,15 @@ interface Paper {
 }
 
 async function getPapers(): Promise<Paper[]> {
-  // Use internal Docker DNS if running in container, else fallback to localhost
-  const apiUrl = process.env.API_URL || 'http://127.0.0.1:8000/api';
-  
-  // We use cache: 'no-store' because our FastAPI already utilizes Redis for caching.
-  // We want Next.js to always fetch the latest state from the backend.
-  const res = await fetch(`${apiUrl}/papers?limit=12`, { cache: 'no-store' });
+  // We use the Next.js server itself as the proxy for FastAPI
+  const baseUrl = process.env.NODE_ENV === 'development' 
+    ? 'http://localhost:3000' 
+    : 'http://localhost:3000'; // Assuming local dev for now
+    
+  const res = await fetch(`${baseUrl}/api/papers?limit=12`, { cache: 'no-store' });
   
   if (!res.ok) {
-    throw new Error('Failed to fetch papers from API');
+    throw new Error(`Failed to fetch papers: ${res.status}`);
   }
   return res.json();
 }

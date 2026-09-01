@@ -1,13 +1,14 @@
 import sys
 
-from radar.analytics.stats import generate_statistics
-from radar.dashboard.generator import build_dashboard
+from radar.logger import setup_global_logger
+from radar.db import Base, engine
 from radar.fetchers.arxiv import run_arxiv_pipeline
 from radar.fetchers.crossref import run_crossref_pipeline
 from radar.fetchers.openalex import run_openalex_pipeline
 from radar.fetchers.semantic_scholar import run_semantic_scholar_pipeline
-from radar.logger import setup_global_logger
+from radar.analytics.stats import generate_statistics
 from radar.reporting.readme import generate_readme
+from radar.dashboard.generator import build_dashboard
 
 # Initialize enterprise logging
 logger = setup_global_logger()
@@ -15,6 +16,16 @@ logger = setup_global_logger()
 def main():
     logger.info("Starting the Math Research Radar pipeline...")
     
+    # --- DATABASE INITIALIZATION STAGE ---
+    logger.info("⚙️ Initializing database tables...")
+    try:
+        # Automatically creates tables if they don't exist based on SQLAlchemy models
+        Base.metadata.create_all(bind=engine)
+        logger.info("✅ Database tables verified/created successfully.\n")
+    except Exception as e:
+        logger.error(f"❌ Failed to initialize database: {e}")
+        sys.exit(1)
+        
     # --- FETCHING STAGE ---
     logger.info("🚀 Running Module: arXiv Fetcher...")
     try:

@@ -1,7 +1,6 @@
 import abc
 import logging
 import time
-from datetime import datetime
 from typing import List
 
 import requests
@@ -11,7 +10,7 @@ from urllib3.util.retry import Retry
 from radar.config import settings
 from radar.deduplication.filter import filter_new_papers
 from radar.models import Paper
-from radar.storage.json import save_papers
+from radar.storage.database import save_papers
 
 logger = logging.getLogger(__name__)
 
@@ -62,8 +61,7 @@ class BaseFetcher(abc.ABC):
             # Enforce global deduplication before storage
             novel_papers = filter_new_papers(all_fetched_papers)
             if novel_papers:
-                today_str = datetime.now().strftime("%Y-%m-%d")
-                filename = f"{today_str}.json"
-                save_papers(novel_papers, filename)
+                # Save directly to PostgreSQL without filename
+                save_papers(novel_papers)
             else:
                 logger.info(f"No novel papers found for {self.name} across all categories.")

@@ -44,6 +44,18 @@ services:
       - radar_network
 
   # --------------------------------------------------------
+  # Caching Layer (In-Memory)
+  # --------------------------------------------------------
+  redis_cache:
+    image: redis:7-alpine
+    container_name: radar_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - radar_network
+
+  # --------------------------------------------------------
   # API Service Layer
   # --------------------------------------------------------
   fastapi_service:
@@ -55,22 +67,16 @@ services:
     ports:
       - "8000:8000"
     environment:
-      # Instruct FastAPI to connect to radar_db using Docker's internal DNS
       - DATABASE_URL=postgresql://radar_user:secure_password@radar_db:5432/math_radar
+      - REDIS_URL=redis://radar_redis:6379/0
     volumes:
-      # Bind mount for Hot Reloading during development
       - ./future/fastapi/app:/app/app
     command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
     depends_on:
       - postgres_db
+      - redis_cache
     networks:
       - radar_network
-
-  # --------------------------------------------------------
-  # Future Architecture Blueprint (Commented)
-  # --------------------------------------------------------
-  # redis_cache: ...
-  # nextjs_dashboard: ...
 
 networks:
   radar_network:

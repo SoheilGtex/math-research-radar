@@ -12,12 +12,11 @@ interface Paper {
 }
 
 async function getPapers(): Promise<Paper[]> {
-  // We use the Next.js server itself as the proxy for FastAPI
-  const baseUrl = process.env.NODE_ENV === 'development' 
-    ? 'http://localhost:3000' 
-    : 'http://localhost:3000'; // Assuming local dev for now
-    
-  const res = await fetch(`${baseUrl}/api/papers?limit=12`, { cache: 'no-store' });
+  // SERVER-SIDE FETCH: Talk directly to the FastAPI container using Docker DNS!
+  // No CORS issues exist here because this runs inside the Node.js container, not the browser.
+  const apiUrl = process.env.API_URL || 'http://127.0.0.1:8000/api';
+  
+  const res = await fetch(`${apiUrl}/papers?limit=12`, { cache: 'no-store' });
   
   if (!res.ok) {
     throw new Error(`Failed to fetch papers: ${res.status}`);

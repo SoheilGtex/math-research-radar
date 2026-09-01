@@ -72,7 +72,6 @@ services:
       - ./data/stats:/app/stats
       - ./data/cache:/app/cache
       - ./data/logs:/app/logs
-      - ./docs:/app/docs
       - ./README.md:/app/README.md
     command: ["celery", "-A", "radar.tasks", "worker", "--loglevel=info"]
     depends_on:

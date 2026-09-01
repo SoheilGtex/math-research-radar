@@ -53,3 +53,7 @@ Icon
 # Logs
 logs/
 *.log
+
+# Database
+data/postgres/
+*.sqlite3

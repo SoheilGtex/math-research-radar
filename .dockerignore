@@ -25,3 +25,8 @@ docs/
 
 # macOS
 .DS_Store
+
+# Local Data & State (Consolidated)
+data/
+docs/
+data/postgres/

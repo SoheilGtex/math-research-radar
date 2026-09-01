@@ -1,31 +1,5 @@
 services:
   # --------------------------------------------------------
-  # Core Data Extraction Pipeline (Runs on demand)
-  # --------------------------------------------------------
-  radar-engine:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: math-research-radar:latest
-    container_name: radar_engine
-    restart: "no"
-    environment:
-      - PYTHONUNBUFFERED=1
-      - APP_ENV=production
-      - DATABASE_URL=postgresql://radar_user:secure_password@radar_db:5432/math_radar
-    volumes:
-      - ./data/papers:/app/papers
-      - ./data/stats:/app/stats
-      - ./data/cache:/app/cache
-      - ./data/logs:/app/logs
-      - ./docs:/app/docs
-      - ./README.md:/app/README.md
-    depends_on:
-      - postgres_db
-    networks:
-      - radar_network
-
-  # --------------------------------------------------------
   # Database Layer
   # --------------------------------------------------------
   postgres_db:
@@ -44,7 +18,7 @@ services:
       - radar_network
 
   # --------------------------------------------------------
-  # Caching Layer (In-Memory)
+  # Caching & Message Broker Layer
   # --------------------------------------------------------
   redis_cache:
     image: redis:7-alpine
@@ -75,6 +49,54 @@ services:
     depends_on:
       - postgres_db
       - redis_cache
+    networks:
+      - radar_network
+
+  # --------------------------------------------------------
+  # Orchestration Layer: Celery Worker
+  # --------------------------------------------------------
+  celery_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: math-research-radar-worker:latest
+    container_name: radar_worker
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+      - APP_ENV=production
+      - DATABASE_URL=postgresql://radar_user:secure_password@radar_db:5432/math_radar
+      - REDIS_URL=redis://radar_redis:6379/0
+    volumes:
+      - ./data/papers:/app/papers
+      - ./data/stats:/app/stats
+      - ./data/cache:/app/cache
+      - ./data/logs:/app/logs
+      - ./docs:/app/docs
+      - ./README.md:/app/README.md
+    command: ["celery", "-A", "radar.tasks", "worker", "--loglevel=info"]
+    depends_on:
+      - postgres_db
+      - redis_cache
+    networks:
+      - radar_network
+
+  # --------------------------------------------------------
+  # Orchestration Layer: Celery Beat (Scheduler)
+  # --------------------------------------------------------
+  celery_beat:
+    # Uses the exact same image built by celery_worker
+    image: math-research-radar-worker:latest
+    container_name: radar_beat
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+      - APP_ENV=production
+      - REDIS_URL=redis://radar_redis:6379/0
+    command: ["celery", "-A", "radar.tasks", "beat", "--loglevel=info"]
+    depends_on:
+      - redis_cache
+      - celery_worker
     networks:
       - radar_network
 

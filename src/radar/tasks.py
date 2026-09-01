@@ -1,6 +1,7 @@
 import os
 import logging
 from celery import Celery
+from celery.schedules import crontab
 import redis
 
 # We import the main pipeline logic
@@ -23,12 +24,25 @@ celery_app = Celery(
     backend=REDIS_URL
 )
 
-# Optional: Configure timezone for scheduled tasks (Celery Beat)
 celery_app.conf.update(
     timezone='UTC',
     enable_utc=True,
 )
 
+# ---------------------------------------------------------
+# Celery Beat Schedule (The "Alarm Clock")
+# ---------------------------------------------------------
+celery_app.conf.beat_schedule = {
+    'run-daily-extraction-midnight': {
+        'task': 'radar.tasks.run_full_extraction_pipeline',
+        # Executes every day at 00:00 UTC
+        'schedule': crontab(minute=0, hour=0), 
+    },
+}
+
+# ---------------------------------------------------------
+# Celery Tasks (The "Worker")
+# ---------------------------------------------------------
 @celery_app.task
 def run_full_extraction_pipeline():
     """Celery task to run the entire ETL pipeline."""
@@ -49,7 +63,6 @@ def run_full_extraction_pipeline():
         # Cache Invalidation: Clear the Redis cache so API serves fresh data
         try:
             r = redis.Redis.from_url(REDIS_URL)
-            # Find and delete all cache keys used by FastAPI
             keys = r.keys("papers:*")
             if keys:
                 r.delete(*keys)

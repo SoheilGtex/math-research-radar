@@ -1,5 +1,4 @@
 import logging
-import re
 from sqlalchemy import desc
 
 from radar.db import SessionLocal
@@ -8,13 +7,13 @@ from radar.models import Paper
 logger = logging.getLogger(__name__)
 
 def generate_readme() -> None:
-    """Update the dynamic section of README.md with the latest papers directly from PostgreSQL."""
+    """Update the dynamic section of README.md with the latest papers using robust string manipulation."""
     db = SessionLocal()
     try:
         # Fetch the 5 most recently added papers from the database
         latest_papers = db.query(Paper).order_by(desc(Paper.created_at)).limit(5).all()
         
-        latest_papers_text = "\n### 📄 Latest Discovered Papers\n\n"
+        latest_papers_text = "### 📄 Latest Discovered Papers\n\n"
         if not latest_papers:
             latest_papers_text += "*No papers found in the database yet.*\n"
         else:
@@ -26,21 +25,25 @@ def generate_readme() -> None:
         try:
             with open("README.md", "r", encoding="utf-8") as f:
                 content = f.read()
+
+            start_tag = "<!-- LATEST_PAPERS_START -->"
+            end_tag = "<!-- LATEST_PAPERS_END -->"
+
+            start_idx = content.find(start_tag)
+            end_idx = content.find(end_tag)
+
+            if start_idx != -1 and end_idx != -1 and start_idx < end_idx:
+                # Construct the new content by slicing the string
+                before_tags = content[:start_idx + len(start_tag)]
+                after_tags = content[end_idx:]
                 
-            # Bulletproof regex: finds the tags regardless of newlines or spaces between them
-            pattern = re.compile(
-                r"(<!-- LATEST_PAPERS_START -->)[\s\S]*?(<!-- LATEST_PAPERS_END -->)", 
-                re.IGNORECASE
-            )
-            
-            if pattern.search(content):
-                # Inject the new content with guaranteed newlines
-                new_content = pattern.sub(rf"\1{latest_papers_text}\n\2", content)
+                new_content = f"{before_tags}\n\n{latest_papers_text}\n{after_tags}"
+                
                 with open("README.md", "w", encoding="utf-8") as f:
                     f.write(new_content)
                 logger.info("Successfully updated the dynamic section of README.md from PostgreSQL.")
             else:
-                logger.warning("Could not find dynamic tags in README.md. Ensure <!-- LATEST_PAPERS_START --> and <!-- LATEST_PAPERS_END --> exist.")
+                logger.warning("Could not find dynamic tags in README.md. Ensure both tags exist and are ordered correctly.")
                 
         except Exception as e:
             logger.error(f"Failed to read/write README.md: {e}")

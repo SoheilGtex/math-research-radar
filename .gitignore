@@ -50,6 +50,7 @@ Icon
 .idea/
 *.swp
 *.swo
+
 # Logs
 logs/
 *.log
@@ -57,3 +58,8 @@ logs/
 # Database
 data/postgres/
 *.sqlite3
+
+# Dynamic Output Data
+data/stats/*.json
+data/papers/*.json
+data/logs/

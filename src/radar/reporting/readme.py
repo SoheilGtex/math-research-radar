@@ -7,43 +7,44 @@ from radar.models import Paper
 logger = logging.getLogger(__name__)
 
 def generate_readme() -> None:
-    """Update the dynamic section of README.md with the latest papers using robust string manipulation."""
+    """Update the dynamic section of README.md. Self-heals if tags are missing."""
     db = SessionLocal()
     try:
         # Fetch the 5 most recently added papers from the database
         latest_papers = db.query(Paper).order_by(desc(Paper.created_at)).limit(5).all()
         
-        latest_papers_text = "### 📄 Latest Discovered Papers\n\n"
+        latest_papers_text = "\n### 📄 Latest Discovered Papers\n\n"
         if not latest_papers:
             latest_papers_text += "*No papers found in the database yet.*\n"
         else:
             for p in latest_papers:
-                # Format the date nicely
                 pub_date = p.published[:10] if p.published else "Unknown Date"
                 latest_papers_text += f"1. **[{p.title}]({p.link})**\n   - *Category: {p.category} | Source: {p.source} | Published: {pub_date}*\n"
+        
+        start_tag = "<!-- LATEST_PAPERS_START -->"
+        end_tag = "<!-- LATEST_PAPERS_END -->"
         
         try:
             with open("README.md", "r", encoding="utf-8") as f:
                 content = f.read()
 
-            start_tag = "<!-- LATEST_PAPERS_START -->"
-            end_tag = "<!-- LATEST_PAPERS_END -->"
-
             start_idx = content.find(start_tag)
             end_idx = content.find(end_tag)
 
+            # Self-healing logic: If tags exist and are ordered correctly
             if start_idx != -1 and end_idx != -1 and start_idx < end_idx:
-                # Construct the new content by slicing the string
                 before_tags = content[:start_idx + len(start_tag)]
                 after_tags = content[end_idx:]
-                
-                new_content = f"{before_tags}\n\n{latest_papers_text}\n{after_tags}"
-                
-                with open("README.md", "w", encoding="utf-8") as f:
-                    f.write(new_content)
-                logger.info("Successfully updated the dynamic section of README.md from PostgreSQL.")
+                new_content = f"{before_tags}{latest_papers_text}\n{after_tags}"
             else:
-                logger.warning("Could not find dynamic tags in README.md. Ensure both tags exist and are ordered correctly.")
+                # SELF-HEAL: Tags are missing or corrupted. Append them to the end automatically.
+                logger.warning("Tags missing or corrupted. Self-healing README.md by appending tags...")
+                # Strip trailing whitespace/newlines before appending
+                new_content = f"{content.rstrip()}\n\n{start_tag}{latest_papers_text}\n{end_tag}\n"
+                
+            with open("README.md", "w", encoding="utf-8") as f:
+                f.write(new_content)
+            logger.info("Successfully updated the dynamic section of README.md from PostgreSQL.")
                 
         except Exception as e:
             logger.error(f"Failed to read/write README.md: {e}")

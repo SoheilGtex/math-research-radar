@@ -16,15 +16,15 @@ docker compose up --build
 <!-- LATEST_PAPERS_START -->
 ### 📄 Latest Discovered Papers
 
-1. **[Pharmacodynamic modeling of colistin and imipenem against in vitro Pseudomonas aeruginosa biofilms.](https://doi.org/10.1016/j.bioflm.2026.100387)**
-   - *Category: math.CA | Source: openalex | Published: 2026-12-01*
-1. **[Interpol review of gunshot residue, 2022 to 2024.](https://doi.org/10.1016/j.fsisyn.2026.100719)**
-   - *Category: math.CA | Source: openalex | Published: 2026-12-01*
-1. **[Understanding How Location Analytics Is Implemented in Information Systems and Business Education](https://doi.org/10.62273/mopz1492)**
-   - *Category: math.CA | Source: openalex | Published: 2026-09-15*
-1. **[Copies, Collaborations, and Gifts: Artistic Production Practices and Pricing in the Chinese Art Market](https://openalex.org/W7204671484)**
-   - *Category: math.CA | Source: openalex | Published: 2026-09-04*
-1. **[A novel demand response framework for the optimal design of hydrogen–ammonia hybrid microgrids](https://openalex.org/W7162220708)**
-   - *Category: math.CA | Source: openalex | Published: 2026-09-15*
+1. **[Associação da atividade física na saúde materna](https://doi.org/10.47385/cedvr.2794.7.2026)**
+   - *Category: math.NA | Source: crossref | Published: 2026-09-01*
+1. **[Formação esportiva na infância e desenvolvimento integral](https://doi.org/10.47385/cedvr.2795.7.2026)**
+   - *Category: math.NA | Source: crossref | Published: 2026-09-01*
+1. **[Enhancing mathematics teachers’ contextualization of mathematics content in welding and fabrication courses using ChatGPT and Meta AI](https://doi.org/10.1007/s44217-026-02067-8)**
+   - *Category: math.NA | Source: crossref | Published: 2026-09-01*
+1. **[Benefícios do treinamento funcional na economia de corrida e prevenção de lesões em corredores](https://doi.org/10.47385/cedvr.2796.7.2026)**
+   - *Category: math.NA | Source: crossref | Published: 2026-09-01*
+1. **[IТЕРАЦIЙНИЙ ДВОСТОРОННIЙ МЕТОД РОЗВ’ЯЗУВАННЯ IНТЕГРАЛЬНИХ РIВНЯНЬ](https://doi.org/10.30970/vam.2026.36.14038)**
+   - *Category: math.NA | Source: crossref | Published: 2026-09-01*
 
 <!-- LATEST_PAPERS_END -->

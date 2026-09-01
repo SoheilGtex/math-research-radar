@@ -55,13 +55,17 @@ Icon
 logs/
 *.log
 
-# Database
-data/postgres/
-*.sqlite3
+# Testing & Linting
+.pytest_cache/
+.ruff_cache/
+.coverage
 
-# Dynamic Output Data
-data/stats/*.json
-data/papers/*.json
-data/logs/
-# Docker volumes & Database state
+# Frontend (Next.js)
+node_modules/
+.next/
+out/
+
+# Database & Dynamic Output Data
+# با مسدود کردن کل پوشه، تمام زیرمجموعه‌ها (postgres, stats, papers) نادیده گرفته می‌شوند
 data/
+*.sqlite3

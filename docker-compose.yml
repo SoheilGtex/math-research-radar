@@ -8,21 +8,40 @@ services:
       dockerfile: Dockerfile
     image: math-research-radar:latest
     container_name: radar_engine
-    # The pipeline is a batch job that runs and exits. 
-    # It should not be restarted automatically upon completion.
     restart: "no"
     environment:
       - PYTHONUNBUFFERED=1
       - APP_ENV=production
+      # DB Connection string for the orchestrator
+      - DATABASE_URL=postgresql://radar_user:secure_password@radar_db:5432/math_radar
     volumes:
-      # Bind mounts to persist generated data into the unified host data/ directory
       - ./data/papers:/app/papers
       - ./data/stats:/app/stats
       - ./data/cache:/app/cache
       - ./data/logs:/app/logs
-      # Keep docs at root for GitHub Pages compatibility
       - ./docs:/app/docs
       - ./README.md:/app/README.md
+    depends_on:
+      - postgres_db
+    networks:
+      - radar_network
+
+  # --------------------------------------------------------
+  # Database Layer
+  # --------------------------------------------------------
+  postgres_db:
+    image: postgres:16-alpine
+    container_name: radar_db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=radar_user
+      - POSTGRES_PASSWORD=secure_password
+      - POSTGRES_DB=math_radar
+    ports:
+      - "5432:5432"
+    volumes:
+      # Map database files to our unified data/ directory
+      - ./data/postgres:/var/lib/postgresql/data
     networks:
       - radar_network
 
@@ -30,18 +49,6 @@ services:
   # Future Architecture Blueprint (Commented for upcoming phases)
   # --------------------------------------------------------
   
-  # postgres_db:
-  #   image: postgres:16-alpine
-  #   container_name: radar_db
-  #   environment:
-  #     - POSTGRES_USER=radar_user
-  #     - POSTGRES_PASSWORD=secure_password
-  #     - POSTGRES_DB=math_radar
-  #   volumes:
-  #     - pg_data:/var/lib/postgresql/data
-  #   networks:
-  #     - radar_network
-
   # redis_cache:
   #   image: redis:7-alpine
   #   container_name: radar_redis
@@ -75,7 +82,3 @@ networks:
   radar_network:
     name: radar_internal_network
     driver: bridge
-
-# volumes:
-#   pg_data:
-#     name: radar_postgres_data

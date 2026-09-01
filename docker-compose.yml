@@ -57,6 +57,10 @@ services:
     environment:
       # Instruct FastAPI to connect to radar_db using Docker's internal DNS
       - DATABASE_URL=postgresql://radar_user:secure_password@radar_db:5432/math_radar
+    volumes:
+      # Bind mount for Hot Reloading during development
+      - ./future/fastapi/app:/app/app
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
     depends_on:
       - postgres_db
     networks:

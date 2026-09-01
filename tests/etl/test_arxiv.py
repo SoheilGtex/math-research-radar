@@ -1,14 +1,13 @@
 from unittest.mock import MagicMock, patch
-from radar.fetchers.arxiv import fetch_arxiv_papers, run_arxiv_pipeline
+from radar.fetchers.arxiv import ArxivFetcher, run_arxiv_pipeline
 
-
-def test_fetch_arxiv_papers_parsing():
+def test_arxiv_fetch_category_parsing():
     """
-    Test that fetch_arxiv_papers correctly parses an Atom feed response
-    without making an actual network call.
+    Test that ArxivFetcher correctly fetches and parses an Atom feed
+    without making real HTTP requests.
     """
-    # 1. Create a dummy XML feed structure mimicking arXiv
-    mock_feed_content = """<?xml version="1.0" encoding="UTF-8"?>
+    # 1. Create a dummy XML feed mimicking the arXiv API response
+    mock_feed_content = b"""<?xml version="1.0" encoding="UTF-8"?>
     <feed xmlns="http://www.w3.org/2005/Atom">
       <entry>
         <id>http://arxiv.org/abs/2609.12345v1</id>
@@ -21,53 +20,46 @@ def test_fetch_arxiv_papers_parsing():
     </feed>
     """
 
-    # 2. Patch requests.get to return our dummy XML
-    with patch("requests.get") as mock_get:
-        mock_response = MagicMock()
-        mock_response.status_code = 200
-        mock_response.content = mock_feed_content.encode("utf-8")
-        mock_get.return_value = mock_response
+    # 2. Instantiate the fetcher
+    fetcher = ArxivFetcher()
+    
+    # 3. Mock the 'session' object inherited from BaseFetcher
+    mock_session = MagicMock()
+    mock_response = MagicMock()
+    mock_response.content = mock_feed_content
+    # Ensure raise_for_status doesn't throw an error
+    mock_response.raise_for_status.return_value = None 
+    mock_session.get.return_value = mock_response
+    
+    fetcher.session = mock_session
 
-        papers = fetch_arxiv_papers(category="math.NA", max_results=1)
+    # 4. Execute the method
+    papers = fetcher.fetch_category("math.NA")
 
-        # 3. Assertions
-        assert len(papers) == 1
-        assert papers[0]["id"] == "http://arxiv.org/abs/2609.12345v1"
-        assert papers[0]["title"] == "Rigorous Numerical Analysis of Navier-Stokes"
-        assert papers[0]["category"] == "math.NA"
-        assert papers[0]["source"] == "arXiv"
-        mock_get.assert_called_once()
+    # 5. Assertions: Verify parsing logic and Pydantic/Model generation
+    assert len(papers) == 1
+    assert papers[0].id == "http://arxiv.org/abs/2609.12345v1"
+    assert papers[0].title == "Rigorous Numerical Analysis of Navier-Stokes"
+    assert papers[0].category == "math.NA"
+    assert papers[0].source == "arxiv"
+    
+    # Verify that the mocked session was actually called
+    mock_session.get.assert_called_once()
 
 
-def test_run_arxiv_pipeline_db_isolation():
+@patch("radar.fetchers.arxiv.ArxivFetcher")
+def test_run_arxiv_pipeline_execution(mock_fetcher_class):
     """
-    Test that run_arxiv_pipeline processes records and calls DB session
-    without requiring a live PostgreSQL instance.
+    Test that the entrypoint function properly instantiates the fetcher
+    and triggers the pipeline execution without hitting the DB.
     """
-    dummy_papers = [
-        {
-            "id": "2609.99999",
-            "title": "Spectral Graph Theory Invariants",
-            "published": "2026-09-01",
-            "summary": "Eigenvalue bounds on Riemannian manifolds.",
-            "link": "https://arxiv.org/abs/2609.99999",
-            "category": "math.SP",
-            "source": "arXiv",
-        }
-    ]
-
-    with patch("radar.fetchers.arxiv.fetch_arxiv_papers", return_value=dummy_papers), \
-         patch("radar.fetchers.arxiv.SessionLocal") as mock_session_cls, \
-         patch("radar.fetchers.arxiv.save_papers_to_json"):  # Prevent local disk writes
-
-        mock_db = MagicMock()
-        mock_session_cls.return_value.__enter__.return_value = mock_db
-        # Mocking query to simulate that the paper is NOT yet in the DB
-        mock_db.query.return_value.filter.return_value.first.return_value = None
-
-        # Execute
-        run_arxiv_pipeline()
-
-        # Verify DB interaction occurred
-        assert mock_db.add.called
-        assert mock_db.commit.called
+    # Create a mock instance that will be returned when ArxivFetcher() is called
+    mock_instance = MagicMock()
+    mock_fetcher_class.return_value = mock_instance
+    
+    # Execute the entry point
+    run_arxiv_pipeline()
+    
+    # Verify initialization and method call
+    mock_fetcher_class.assert_called_once()
+    mock_instance.run_pipeline.assert_called_once()

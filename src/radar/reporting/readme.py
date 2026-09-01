@@ -1,79 +1,50 @@
-import glob
-import json
 import logging
-import os
 import re
-from datetime import datetime, timezone
+from sqlalchemy import desc
 
-from radar.config import settings
+from radar.db import SessionLocal
+from radar.models import Paper
 
 logger = logging.getLogger(__name__)
 
-README_PATH = "README.md"
-STATS_FILE = os.path.join(settings.stats_dir, "categories.json")
-
 def generate_readme() -> None:
-    """Generate the dynamic parts of the README and inject them between specific markers."""
-    logger.info("Starting dynamic README generation...")
-
-    total_papers = 0
-    stats_text = ""
-    if os.path.exists(STATS_FILE):
-        try:
-            with open(STATS_FILE, 'r', encoding='utf-8') as f:
-                stats = json.load(f)
-                for cat in sorted(stats.keys()):
-                    count = stats[cat]
-                    stats_text += f"- **{cat}**: {count} papers\n"
-                    total_papers += count
-        except Exception as e:
-            logger.error(f"Failed to read stats file: {e}")
-
-    latest_papers_text = ""
-    # Use centralized configuration for the papers directory
-    paper_files = sorted(glob.glob(os.path.join(settings.papers_dir, "*.json")), reverse=True)
-    
-    if paper_files:
-        latest_file = paper_files[0]
-        try:
-            with open(latest_file, 'r', encoding='utf-8') as f:
-                papers = json.load(f)
-                for p in papers[:5]:
-                    pub_date = p.get('published', 'Unknown Date')[:10]
-                    latest_papers_text += f"1. **[{p['title']}]({p['link']})**\n   - *Category: {p['category']} | Published: {pub_date}*\n"
-        except Exception as e:
-            logger.error(f"Failed to read latest papers from {latest_file}: {e}")
-
-    now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
-    
-    dynamic_content = f"""
-## 📊 Repository Statistics
-**Total Papers Tracked:** {total_papers}
-
-{stats_text if stats_text else "_No statistics available yet._"}
-
-## 🆕 Latest Discoveries
-{latest_papers_text if latest_papers_text else "_No papers fetched yet._"}
-
----
-*Last updated automatically by GitHub Actions on: **{now_utc}***
-"""
-
+    """Update the dynamic section of README.md with the latest papers directly from PostgreSQL."""
+    db = SessionLocal()
     try:
-        with open(README_PATH, 'r', encoding='utf-8') as f:
-            readme_content = f.read()
-
-        pattern = r"(<!-- RADAR_START -->)(.*?)(<!-- RADAR_END -->)"
-        new_readme = re.sub(
-            pattern, 
-            rf"\1\n{dynamic_content}\n\3", 
-            readme_content, 
-            flags=re.DOTALL
-        )
-
-        with open(README_PATH, 'w', encoding='utf-8') as f:
-            f.write(new_readme)
+        # Fetch the 5 most recently added papers from the database
+        latest_papers = db.query(Paper).order_by(desc(Paper.created_at)).limit(5).all()
+        
+        latest_papers_text = "### 📄 Latest Discovered Papers\n\n"
+        if not latest_papers:
+            latest_papers_text += "*No papers found in the database yet.*\n"
+        else:
+            for p in latest_papers:
+                # Format the date nicely
+                pub_date = p.published[:10] if p.published else "Unknown Date"
+                latest_papers_text += f"1. **[{p.title}]({p.link})**\n   - *Category: {p.category} | Source: {p.source} | Published: {pub_date}*\n"
+        
+        try:
+            with open("README.md", "r", encoding="utf-8") as f:
+                content = f.read()
+                
+            # Regex to find and replace the dynamic block
+            pattern = re.compile(
+                r"(<!-- LATEST_PAPERS_START -->\n)(.*?)(\n<!-- LATEST_PAPERS_END -->)", 
+                re.DOTALL
+            )
             
-        logger.info("Successfully updated the dynamic section of README.md")
+            if pattern.search(content):
+                new_content = pattern.sub(rf"\1{latest_papers_text}\3", content)
+                with open("README.md", "w", encoding="utf-8") as f:
+                    f.write(new_content)
+                logger.info("Successfully updated the dynamic section of README.md from PostgreSQL.")
+            else:
+                logger.warning("Could not find dynamic tags in README.md. Ensure <!-- LATEST_PAPERS_START --> and <!-- LATEST_PAPERS_END --> exist.")
+                
+        except Exception as e:
+            logger.error(f"Failed to read/write README.md: {e}")
+            
     except Exception as e:
-        logger.error(f"Failed to update README.md: {e}")
+        logger.error(f"Database error while generating README: {e}")
+    finally:
+        db.close()

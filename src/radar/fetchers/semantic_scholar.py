@@ -1,13 +1,14 @@
 import logging
 import time
+from typing import List
+
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-from typing import List
 
 from radar.config import settings
-from radar.models import Paper
 from radar.fetchers.base import BaseFetcher
+from radar.models import Paper
 
 logger = logging.getLogger(__name__)
 

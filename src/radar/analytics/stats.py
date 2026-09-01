@@ -1,54 +1,37 @@
-import glob
 import json
 import logging
-import os
-from collections import Counter
+from sqlalchemy import func, cast, Date
 
-from radar.config import settings
+from radar.db import SessionLocal
+from radar.models import Paper
 
 logger = logging.getLogger(__name__)
 
 def generate_statistics() -> None:
-    """Read all daily paper JSON files and generate aggregated statistics."""
-    os.makedirs(settings.stats_dir, exist_ok=True)
-    
-    category_counts = Counter()
-    daily_stats = {}
-    
-    # Use centralized configuration for paths
-    paper_files = glob.glob(os.path.join(settings.papers_dir, "*.json"))
-    
-    if not paper_files:
-        logger.warning("No paper files found to process.")
-        return
-
-    for filepath in sorted(paper_files):
-        date_str = os.path.basename(filepath).replace(".json", "")
+    """Generate analytics by querying the PostgreSQL database using SQL aggregations."""
+    db = SessionLocal()
+    try:
+        # 1. Aggregate counts per category
+        category_counts = db.query(Paper.category, func.count(Paper.id)).group_by(Paper.category).all()
+        cat_stats = {cat: count for cat, count in category_counts}
         
-        try:
-            with open(filepath, 'r', encoding='utf-8') as f:
-                papers = json.load(f)
-        except json.JSONDecodeError as e:
-            logger.error(f"Failed to read {filepath} - Invalid JSON: {e}")
-            continue
-            
-        day_category_counts = Counter()
-        for paper in papers:
-            cat = paper.get("category", "unknown")
-            category_counts[cat] += 1
-            day_category_counts[cat] += 1
-            
-        daily_stats[date_str] = {
-            "total_fetched": len(papers),
-            "categories": dict(day_category_counts)
-        }
-        
-    categories_path = os.path.join(settings.stats_dir, "categories.json")
-    with open(categories_path, 'w', encoding='utf-8') as f:
-        json.dump(dict(category_counts), f, indent=4, ensure_ascii=False)
-    logger.info(f"Updated {categories_path} with total counts.")
+        with open("data/stats/categories.json", "w", encoding="utf-8") as f:
+            json.dump(cat_stats, f, ensure_ascii=False, indent=4)
+        logger.info("Updated data/stats/categories.json with total counts from PostgreSQL.")
 
-    history_path = os.path.join(settings.stats_dir, "history.json")
-    with open(history_path, 'w', encoding='utf-8') as f:
-        json.dump(daily_stats, f, indent=4, ensure_ascii=False)
-    logger.info(f"Updated {history_path} with daily statistics.")
+        # 2. Aggregate history counts (papers stored per day)
+        history_counts = db.query(
+            cast(Paper.created_at, Date).label("day"), 
+            func.count(Paper.id)
+        ).group_by("day").order_by("day").all()
+        
+        hist_stats = {str(day): count for day, count in history_counts if day}
+
+        with open("data/stats/history.json", "w", encoding="utf-8") as f:
+            json.dump(hist_stats, f, ensure_ascii=False, indent=4)
+        logger.info("Updated data/stats/history.json with daily statistics from PostgreSQL.")
+
+    except Exception as e:
+        logger.error(f"Error generating statistics from DB: {e}")
+    finally:
+        db.close()

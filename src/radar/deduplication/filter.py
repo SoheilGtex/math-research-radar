@@ -1,9 +1,10 @@
 import logging
 from typing import List
+
 from sqlalchemy.exc import SQLAlchemyError
 
-from radar.models import Paper
 from radar.db import SessionLocal
+from radar.models import Paper
 
 logger = logging.getLogger(__name__)
 

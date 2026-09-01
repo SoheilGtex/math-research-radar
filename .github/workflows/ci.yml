@@ -1,18 +1,21 @@
-name: Continuous Integration
+name: Continuous Integration & Deployment
 
-# Trigger the pipeline on pushes or pull requests to the main branch
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_PREFIX: ${{ github.repository_owner }}/math-radar
+
 jobs:
   # --------------------------------------------------------
-  # 🐍 Backend Pipeline (Python / FastAPI / Celery)
+  # 1. 🐍 Backend Pipeline (Lint & Unit Tests)
   # --------------------------------------------------------
-  backend-lint-and-test:
-    name: Python Backend CI
+  backend-ci:
+    name: Python Lint & Tests
     runs-on: ubuntu-latest
     
     steps:
@@ -23,36 +26,26 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: 'pip' # Speeds up execution by caching pip downloads
+          cache: 'pip'
 
       - name: 📦 Install Python Dependencies
         run: |
           python -m pip install --upgrade pip
-          # Installs the package along with 'dev' dependencies (ruff, pytest)
           pip install -e '.[dev]'
 
       - name: 🧹 Lint with Ruff
-        run: |
-          # Fails the build if syntax errors or style violations are found
-          ruff check .
+        run: ruff check .
 
-      - name: 🧪 Run Pytest
-        run: |
-          # Check if a tests directory exists; if so, run pytest
-          if [ -d "tests" ]; then
-            pytest -v
-          else
-            echo "No 'tests/' directory found. Skipping pytest."
-          fi
+      - name: 🧪 Run Pytest Suite
+        run: pytest -v
 
   # --------------------------------------------------------
-  # ⚛️ Frontend Pipeline (Next.js / TypeScript)
+  # 2. ⚛️ Frontend Pipeline (Lint & Next.js Build)
   # --------------------------------------------------------
-  frontend-lint-and-build:
-    name: Next.js Frontend CI
+  frontend-ci:
+    name: Next.js Lint & Build
     runs-on: ubuntu-latest
     
-    # Run all steps in this job from the Next.js directory
     defaults:
       run:
         working-directory: ./future/nextjs
@@ -69,12 +62,67 @@ jobs:
           cache-dependency-path: future/nextjs/package-lock.json
 
       - name: 📦 Install Node Dependencies
-        # npm ci is strictly for CI environments; it perfectly mirrors package-lock.json
         run: npm ci
 
       - name: 🧹 Lint Next.js & TypeScript
         run: npm run lint
 
       - name: 🏗️ Verify Production Build
-        # Ensures the project can successfully build without Type or Server Component errors
         run: npm run build
+
+  # --------------------------------------------------------
+  # 3. 🚀 Continuous Deployment (Build & Push Docker Images)
+  # --------------------------------------------------------
+  publish-docker-images:
+    name: Build & Publish Container Images
+    needs: [backend-ci, frontend-ci]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🔧 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 🔑 Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Convert repository owner to lowercase for Docker image naming standard
+      - name: 🏷️ Set Lowercase Repository Name
+        id: repo_name
+        run: echo "OWNER_LC=${OWNER,,}" >> $GITHUB_ENV
+        env:
+          OWNER: ${{ github.repository_owner }}
+
+      - name: 🐳 Build and Push Backend Worker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.OWNER_LC }}/math-radar-worker:latest
+
+      - name: 🐳 Build and Push FastAPI Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./future/fastapi
+          file: ./future/fastapi/Dockerfile
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.OWNER_LC }}/math-radar-api:latest
+
+      - name: 🐳 Build and Push Next.js Dashboard Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./future/nextjs
+          file: ./future/nextjs/Dockerfile
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.OWNER_LC }}/math-radar-dashboard:latests

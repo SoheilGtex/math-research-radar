@@ -30,7 +30,7 @@ services:
       - radar_network
 
   # --------------------------------------------------------
-  # API Service Layer
+  # API Service Layer (FastAPI)
   # --------------------------------------------------------
   fastapi_service:
     build:
@@ -53,7 +53,7 @@ services:
       - radar_network
 
   # --------------------------------------------------------
-  # Orchestration Layer: Celery Worker
+  # Orchestration Layer: Celery Worker & Beat
   # --------------------------------------------------------
   celery_worker:
     build:
@@ -81,11 +81,7 @@ services:
     networks:
       - radar_network
 
-  # --------------------------------------------------------
-  # Orchestration Layer: Celery Beat (Scheduler)
-  # --------------------------------------------------------
   celery_beat:
-    # Uses the exact same image built by celery_worker
     image: math-research-radar-worker:latest
     container_name: radar_beat
     restart: unless-stopped
@@ -97,6 +93,30 @@ services:
     depends_on:
       - redis_cache
       - celery_worker
+    networks:
+      - radar_network
+
+  # --------------------------------------------------------
+  # Presentation Layer (Next.js)
+  # --------------------------------------------------------
+  nextjs_dashboard:
+    build:
+      context: ./future/nextjs
+      dockerfile: Dockerfile
+    container_name: radar_dashboard
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      # Instruct Next.js Server Components to route internal HTTP requests to the FastAPI container
+      - API_URL=http://radar_api:8000/api
+    volumes:
+      # Bind mount for Hot Reloading React components
+      - ./future/nextjs/src:/app/src
+      - ./future/nextjs/public:/app/public
+      - ./future/nextjs/tailwind.config.ts:/app/tailwind.config.ts
+    depends_on:
+      - fastapi_service
     networks:
       - radar_network
 

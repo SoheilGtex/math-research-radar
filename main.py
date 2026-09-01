@@ -1,14 +1,14 @@
 import sys
 
-from radar.logger import setup_global_logger
+from radar.analytics.stats import generate_statistics
+from radar.dashboard.generator import build_dashboard
 from radar.db import Base, engine
 from radar.fetchers.arxiv import run_arxiv_pipeline
 from radar.fetchers.crossref import run_crossref_pipeline
 from radar.fetchers.openalex import run_openalex_pipeline
 from radar.fetchers.semantic_scholar import run_semantic_scholar_pipeline
-from radar.analytics.stats import generate_statistics
+from radar.logger import setup_global_logger
 from radar.reporting.readme import generate_readme
-from radar.dashboard.generator import build_dashboard
 
 # Initialize enterprise logging
 logger = setup_global_logger()

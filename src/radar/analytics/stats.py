@@ -1,6 +1,7 @@
 import json
 import logging
-from sqlalchemy import func, cast, Date
+
+from sqlalchemy import Date, cast, func
 
 from radar.db import SessionLocal
 from radar.models import Paper

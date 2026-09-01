@@ -1,7 +1,8 @@
 import json
 import logging
-from datetime import datetime
 import os
+from datetime import datetime
+
 from sqlalchemy import desc
 
 from radar.db import SessionLocal
@@ -28,7 +29,7 @@ def build_dashboard() -> None:
     finally:
         db.close()
 
-    html_content = f"""<!DOCTYPE html>
+    html_content = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -36,20 +37,20 @@ def build_dashboard() -> None:
     <title>Math Research Radar Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f6f8fa; margin: 0; padding: 20px; color: #24292f; }}
-        .container {{ max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }}
-        h1 {{ text-align: center; color: #0969da; border-bottom: 1px solid #eaecef; padding-bottom: 10px; }}
-        .chart-container {{ width: 100%; max-width: 600px; margin: 30px auto; }}
-        .paper-list {{ margin-top: 40px; }}
-        .paper-item {{ padding: 15px; border-bottom: 1px solid #eaecef; }}
-        .paper-item:last-child {{ border-bottom: none; }}
-        .paper-title {{ font-size: 16px; font-weight: 600; color: #0969da; text-decoration: none; }}
-        .paper-title:hover {{ text-decoration: underline; }}
-        .paper-meta {{ font-size: 12px; color: #57606a; margin-top: 5px; }}
-        .paper-summary {{ font-size: 14px; margin-top: 8px; color: #24292f; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }}
-        .badge {{ display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; background-color: #ddf4ff; color: #0969da; }}
-        .source-badge {{ background-color: #fff8c5; color: #9a6700; margin-left: 5px; }}
-        .footer {{ text-align: center; margin-top: 30px; font-size: 12px; color: #57606a; }}
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f6f8fa; margin: 0; padding: 20px; color: #24292f; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+        h1 { text-align: center; color: #0969da; border-bottom: 1px solid #eaecef; padding-bottom: 10px; }
+        .chart-container { width: 100%; max-width: 600px; margin: 30px auto; }
+        .paper-list { margin-top: 40px; }
+        .paper-item { padding: 15px; border-bottom: 1px solid #eaecef; }
+        .paper-item:last-child { border-bottom: none; }
+        .paper-title { font-size: 16px; font-weight: 600; color: #0969da; text-decoration: none; }
+        .paper-title:hover { text-decoration: underline; }
+        .paper-meta { font-size: 12px; color: #57606a; margin-top: 5px; }
+        .paper-summary { font-size: 14px; margin-top: 8px; color: #24292f; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; background-color: #ddf4ff; color: #0969da; }
+        .source-badge { background-color: #fff8c5; color: #9a6700; margin-left: 5px; }
+        .footer { text-align: center; margin-top: 30px; font-size: 12px; color: #57606a; }
     </style>
 </head>
 <body>

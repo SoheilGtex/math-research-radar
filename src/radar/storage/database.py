@@ -1,5 +1,6 @@
 import logging
 from typing import List
+
 from sqlalchemy.exc import SQLAlchemyError
 
 from radar.db import SessionLocal

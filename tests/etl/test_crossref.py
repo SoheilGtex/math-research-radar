@@ -1,5 +1,7 @@
 from unittest.mock import MagicMock, patch
+
 from radar.fetchers.crossref import CrossrefFetcher, run_crossref_pipeline
+
 
 def test_crossref_fetch_category_parsing():
     """

@@ -1,5 +1,7 @@
 from unittest.mock import MagicMock, patch
+
 from radar.fetchers.arxiv import ArxivFetcher, run_arxiv_pipeline
+
 
 def test_arxiv_fetch_category_parsing():
     """

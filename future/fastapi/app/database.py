@@ -1,6 +1,7 @@
 import os
-from sqlalchemy import create_engine, Column, String, Text, DateTime
-from sqlalchemy.orm import sessionmaker, declarative_base
+
+from sqlalchemy import Column, DateTime, String, Text, create_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
 from sqlalchemy.sql import func
 
 # Points to radar_db in Docker network, or localhost for local testing

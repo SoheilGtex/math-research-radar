@@ -1,13 +1,14 @@
 import json
-import os
 import logging
-import redis
-from fastapi import FastAPI, Depends, Query
-from sqlalchemy.orm import Session
-from sqlalchemy import desc
+import os
 from typing import List, Optional
 
-from app.database import get_db, Paper
+import redis
+from fastapi import Depends, FastAPI, Query
+from sqlalchemy import desc
+from sqlalchemy.orm import Session
+
+from app.database import Paper, get_db
 from app.schemas import PaperResponse
 
 logger = logging.getLogger(__name__)

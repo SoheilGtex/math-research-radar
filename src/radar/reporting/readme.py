@@ -1,4 +1,5 @@
 import logging
+
 from sqlalchemy import desc
 
 from radar.db import SessionLocal

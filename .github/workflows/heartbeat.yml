@@ -18,9 +18,8 @@ jobs:
         run: |
           echo "Last automated check-in: $(date)" > PING.md
           
-          # [Definitive] گیت‌هاب فقط کامیت‌های این ایمیل را برای مربع‌های سبز محاسبه می‌کند
-          # ایمیل زیر را دقیقاً با ایمیلی که با آن اکانت گیت‌هاب خود را ساخته‌اید جایگزین کنید
-          git config --local user.email "YOUR_GITHUB_EMAIL@example.com"
+          # GitHub only counts commits associated with this exact account email for the contribution graph
+          git config --local user.email "soheilsalmanisafarpour@gmail.com"
           git config --local user.name "SoheilGtex"
           
           git add PING.md

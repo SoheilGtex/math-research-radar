@@ -14,7 +14,7 @@ class CrossrefFetcher(BaseFetcher):
     def __init__(self):
         super().__init__(name="Crossref", rate_limit_delay=2)
         # Crossref requests the "Polite Pool" usage by providing an email
-        self.session.headers.update({"User-Agent": "MathResearchRadar/0.1.0 (mailto:radar-bot@example.com)"})
+        self.session.headers.update({"User-Agent": "MathResearchRadar/1.0.0 (mailto:radar-bot@example.com)"})
 
     def fetch_category(self, category: str) -> List[Paper]:
         logger.info(f"Fetching up to {settings.max_results_per_category} papers from Crossref for: {category}")

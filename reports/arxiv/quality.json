@@ -1,0 +1,27 @@
+{
+  "category_counts": {
+    "math.CA": 5,
+    "math.LO": 5,
+    "math.NA": 5,
+    "math.RA": 5
+  },
+  "checks": {
+    "canonical_urls": true,
+    "unique_ids": true,
+    "valid_publication_dates": true
+  },
+  "cross_listed_papers": 1,
+  "issues": {
+    "duplicate_ids": [],
+    "invalid_date_ids": [],
+    "invalid_url_ids": [],
+    "missing_abstract_ids": []
+  },
+  "publication_window": {
+    "earliest": "2026-10-15",
+    "latest": "2026-10-15"
+  },
+  "schema_version": 1,
+  "source": "arxiv",
+  "total_papers": 19
+}

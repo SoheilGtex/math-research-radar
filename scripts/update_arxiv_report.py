@@ -5,6 +5,7 @@ import time
 from pathlib import Path
 from typing import Sequence
 
+from radar.analytics.quality import analyze_quality
 from radar.config import settings
 from radar.fetchers.arxiv import ArxivFetcher
 from radar.reporting.arxiv_digest import render_digest, write_digest
@@ -37,11 +38,20 @@ def generate_report(
         papers.extend(batch)
 
     snapshot = build_snapshot(papers)
+    quality = analyze_quality(snapshot)
+
+    if not all(quality["checks"].values()):
+        raise ValueError("Research snapshot failed integrity checks")
 
     digest = render_digest(snapshot)
+
     json_changed = write_snapshot(output, snapshot)
-    markdown_changed = write_digest(output.with_suffix('.md'), digest)
-    return json_changed or markdown_changed
+    markdown_changed = write_digest(output.with_suffix(".md"), digest)
+    quality_changed = write_snapshot(
+        output.with_name("quality.json"), quality
+    )
+
+    return json_changed or markdown_changed or quality_changed
 
 
 def main() -> None:

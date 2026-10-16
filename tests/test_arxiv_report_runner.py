@@ -120,3 +120,55 @@ def test_markdown_report_is_generated_and_stable(tmp_path):
 
     assert generate_report(fetcher, ["math.NA"], output) is False
     assert markdown.read_text(encoding="utf-8") == content
+
+
+def test_quality_report_generated_and_stable(tmp_path):
+    output = tmp_path / "latest.json"
+    sample = make_paper("2610.12345v1", "math.NA")
+    fetcher = make_fetcher([[sample], [sample]])
+
+    assert generate_report(fetcher, ["math.NA"], output) is True
+
+    quality_path = tmp_path / "quality.json"
+    assert quality_path.is_file()
+
+    quality = json.loads(quality_path.read_text(encoding="utf-8"))
+
+    assert quality["total_papers"] == 1
+    assert quality["category_counts"] == {"math.NA": 1}
+    assert quality["checks"]["unique_ids"] is True
+    assert quality["checks"]["valid_publication_dates"] is True
+    assert quality["checks"]["canonical_urls"] is True
+
+    previous_content = quality_path.read_bytes()
+
+    assert generate_report(fetcher, ["math.NA"], output) is False
+    assert quality_path.read_bytes() == previous_content
+
+
+def test_failed_quality_validation_preserves_all_reports(tmp_path):
+    output = tmp_path / "latest.json"
+
+    valid = make_paper("2610.12345v1", "math.NA")
+    fetcher = make_fetcher([[valid]])
+
+    assert generate_report(fetcher, ["math.NA"], output) is True
+
+    paths = [
+        output,
+        output.with_suffix(".md"),
+        output.with_name("quality.json"),
+    ]
+
+    before = {path: path.read_bytes() for path in paths}
+
+    invalid = make_paper("2610.12346v1", "math.NA")
+    invalid.published = "invalid-date"
+
+    bad_fetcher = make_fetcher([[invalid]])
+
+    with pytest.raises(ValueError, match="integrity checks"):
+        generate_report(bad_fetcher, ["math.NA"], output)
+
+    for path in paths:
+        assert path.read_bytes() == before[path]

@@ -32,8 +32,8 @@ export default async function Dashboard() {
       <div className="max-w-6xl mx-auto">
         
         <header className="mb-10 text-center">
-          <h1 className="text-4xl font-extrabold text-blue-600 tracking-tight">🔭 Math Research Radar</h1>
-          <p className="text-gray-500 mt-2 text-lg">Real-time Intelligence Dashboard powered by FastAPI & PostgreSQL</p>
+          <h1 className="text-4xl font-extrabold text-blue-600 tracking-tight">Mathematical Research Intelligence</h1>
+          <p className="text-gray-500 mt-2 text-lg">Research literature dashboard powered by FastAPI & PostgreSQL</p>
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

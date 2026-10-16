@@ -8,7 +8,7 @@ from radar.models import Paper
 logger = logging.getLogger(__name__)
 
 def generate_readme() -> None:
-    """Update the dynamic section of README.md. Self-heals if tags are missing."""
+    """Update the marked README section without changing unmarked files."""
     db = SessionLocal()
     try:
         # Fetch the 5 most recently added papers from the database
@@ -32,21 +32,26 @@ def generate_readme() -> None:
             start_idx = content.find(start_tag)
             end_idx = content.find(end_tag)
 
-            # Self-healing logic: If tags exist and are ordered correctly
-            if start_idx != -1 and end_idx != -1 and start_idx < end_idx:
-                before_tags = content[:start_idx + len(start_tag)]
-                after_tags = content[end_idx:]
-                new_content = f"{before_tags}{latest_papers_text}\n{after_tags}"
-            else:
-                # SELF-HEAL: Tags are missing or corrupted. Append them to the end automatically.
-                logger.warning("Tags missing or corrupted. Self-healing README.md by appending tags...")
-                # Strip trailing whitespace/newlines before appending
-                new_content = f"{content.rstrip()}\n\n{start_tag}{latest_papers_text}\n{end_tag}\n"
-                
-            with open("README.md", "w", encoding="utf-8") as f:
-                f.write(new_content)
-            logger.info("Successfully updated the dynamic section of README.md from PostgreSQL.")
-                
+            # Never modify an unmarked README.
+            if start_idx < 0 or end_idx < 0 or start_idx >= end_idx:
+                logger.info(
+                    "README.md has no valid dynamic markers; skipping update."
+                )
+                return
+
+            before = content[:start_idx + len(start_tag)]
+            after = content[end_idx:]
+            new_content = before + latest_papers_text + "\n" + after
+
+            if new_content == content:
+                logger.info("Dynamic README section unchanged.")
+                return
+
+            with open("README.md", "w", encoding="utf-8") as file:
+                file.write(new_content)
+
+            logger.info("Updated marked README section.")
+
         except Exception as e:
             logger.error(f"Failed to read/write README.md: {e}")
             

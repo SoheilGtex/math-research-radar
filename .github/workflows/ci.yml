@@ -1,4 +1,4 @@
-name: Continuous Integration & Deployment
+name: Mathematical Research Intelligence CI/CD
 
 on:
   push:
@@ -9,7 +9,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_PREFIX: ${{ github.repository_owner }}/math-radar
 
 jobs:
   # --------------------------------------------------------
@@ -127,3 +126,23 @@ jobs:
           file: ./future/nextjs/Dockerfile
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.OWNER_LC }}/math-radar-dashboard:latest
+
+  # Verify the worker Dockerfile before merging.
+  worker-image-smoke:
+    name: Worker Docker Build Smoke Test
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Worker Image Without Publishing
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false

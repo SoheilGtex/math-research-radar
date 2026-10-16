@@ -23,7 +23,7 @@ WORKDIR /build
 RUN pip install --upgrade pip wheel
 
 # Copy package definitions and source code
-COPY pyproject.toml .
+COPY pyproject.toml README.md ./
 COPY src/ src/
 
 # Install the application into the virtual environment

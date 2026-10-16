@@ -41,7 +41,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://radar_user:secure_password@radar_db:5432/math_radar
+      - DATABASE_URL=postgresql+psycopg2://radar_user:secure_password@radar_db:5432/math_radar
       - REDIS_URL=redis://radar_redis:6379/0
     volumes:
       - ./future/fastapi/app:/app/app
@@ -65,7 +65,7 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - APP_ENV=production
-      - DATABASE_URL=postgresql://radar_user:secure_password@radar_db:5432/math_radar
+      - DATABASE_URL=postgresql+psycopg2://radar_user:secure_password@radar_db:5432/math_radar
       - REDIS_URL=redis://radar_redis:6379/0
     volumes:
       - ./data/papers:/app/papers

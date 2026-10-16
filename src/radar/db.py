@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 # Fallback to local host if DATABASE_URL is not provided (useful for local testing)
 DATABASE_URL = os.environ.get(
     "DATABASE_URL", 
-    "postgresql://radar_user:secure_password@localhost:5432/math_radar"
+    "postgresql+psycopg2://radar_user:secure_password@localhost:5432/math_radar"
 )
 
 try:

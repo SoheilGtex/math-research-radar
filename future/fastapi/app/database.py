@@ -7,7 +7,7 @@ from sqlalchemy.sql import func
 # Points to radar_db in Docker network, or localhost for local testing
 DATABASE_URL = os.environ.get(
     "DATABASE_URL", 
-    "postgresql://radar_user:secure_password@localhost:5432/math_radar"
+    "postgresql+psycopg2://radar_user:secure_password@localhost:5432/math_radar"
 )
 
 engine = create_engine(DATABASE_URL)

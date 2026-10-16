@@ -126,4 +126,4 @@ jobs:
           context: ./future/nextjs
           file: ./future/nextjs/Dockerfile
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.OWNER_LC }}/math-radar-dashboard:latests
+          tags: ${{ env.REGISTRY }}/${{ env.OWNER_LC }}/math-radar-dashboard:latest

@@ -16,7 +16,7 @@ logging.basicConfig(
 logger = logging.getLogger("pipeline")
 
 def main():
-    logger.info("Starting the Math Research Radar pipeline...")
+    logger.info("Starting the Mathematical Research Intelligence pipeline...")
     logger.info("⚙️ Initializing database tables...")
     Base.metadata.create_all(bind=engine)
     logger.info("✅ Database tables verified/created successfully.\n")

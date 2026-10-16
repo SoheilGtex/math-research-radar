@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "math-research-radar"
-version = "1.0.0"
-description = "Automated Research Intelligence Platform for Mathematics"
+name = "mathematical-research-intelligence"
+version = "1.1.0"
+description = "Mathematical research intelligence with validated arXiv reports and metadata quality monitoring"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [

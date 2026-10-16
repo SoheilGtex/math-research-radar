@@ -18,7 +18,7 @@ REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
 cache = redis.Redis.from_url(REDIS_URL, decode_responses=True)
 
 app = FastAPI(
-    title="Math Research Radar API",
+    title="Mathematical Research Intelligence API",
     description="RESTful API for querying mathematical research papers with Redis caching",
     version="1.1.0"
 )

@@ -1,0 +1,216 @@
+{
+  "papers": [
+    {
+      "arxiv_id": "2610.22351",
+      "categories": [
+        "math.LO"
+      ],
+      "published": "2026-10-15T17:57:39Z",
+      "summary": "We construct a complete, second countable metric space with uncountable Scott rank. This answers a well-known question posed by Fokina, Friedman, K{ö}rwien and Nies, and shows that the known upper bound $ω_1$ on the rank, proved by Doucha, is sharp. Further, a Baire category based variant of the rank of metric spaces is developed, and this is used to give new proofs of the known rank bounds based only on standard methods of descriptive set theory.",
+      "title": "The rank problem for metric spaces",
+      "url": "https://arxiv.org/abs/2610.22351",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.22317",
+      "categories": [
+        "math.LO",
+        "math.RA"
+      ],
+      "published": "2026-10-15T17:51:18Z",
+      "summary": "We analyze the behavior of systems of algebraic differential equations when considered as systems of difference-differential equations, with special emphasis on systems which define minimal sets relative to the theory $\\operatorname{DCF}$ of differentially closed fields of characteristic zero with $m$ distinguished commuting derivations. We show that if $p$ is a minimal type relative to $\\operatorname{DCF}$ defined by a system of algebraic partial differential equations and inequations and the forking geometry on $p$ is trivial (also called ``disintegrated''), then $p$ remains minimal when regarded as a partial type relative to the theory $\\operatorname{DCFA}$ of difference-differentially closed fields of characteristic zero with $m$ commuting derivations in the sense that every completion has $\\operatorname{SU}$-rank one. We illustrate this theorem by describing in detail the possible difference-differential equations consistent with differential equations of the form $y' = y^3 + a_2 y^2 + a_1 y + a_0$ where $a_0$, $a_1$, and $a_2$ are differential constants.",
+      "title": "Differential equations as difference-differential equations",
+      "url": "https://arxiv.org/abs/2610.22317",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.22261",
+      "categories": [
+        "math.NA"
+      ],
+      "published": "2026-10-15T17:27:37Z",
+      "summary": "In this work, we develop sketched variants of subspace iteration and TraceMIN, called sSI and sTraceMIN, for real symmetric eigenvalue problems by combining basis whitening with the sketched Rayleigh-Ritz (sRR) procedure. The nonsymmetric projected matrix in sRR may have nonreal eigenpairs, leading to complex arithmetic and additional computational costs. We overcome this difficulty using a real Schur formulation of sRR that keeps the iterations in real arithmetic. We further develop procedures for characteristic subspace selection and convergence monitoring within this formulation. On the theoretical side, we discuss suitable subspace embedding assumptions for sketched eigensolvers that use a fixed sketching matrix throughout the iterations. Under a mild embedding assumption, we establish local convergence results for sSI and sTraceMIN. Numerical experiments demonstrate runtime savings of up to 39% for sSI and 21% for sTraceMIN relative to their standard counterparts on the test problems.",
+      "title": "Real-Arithmetic Sketched Eigensolvers for Symmetric Matrices",
+      "url": "https://arxiv.org/abs/2610.22261",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.22255",
+      "categories": [
+        "math.NA"
+      ],
+      "published": "2026-10-15T17:24:20Z",
+      "summary": "The ReLU Matrix Decomposition (RMD) approximates a sparse, nonnegative m-by-n matrix X by max(0, WH), where W is an m-by-r matrix, H is an r-by-n matrix, and r is the rank of the decomposition. The most common formulation, referred to as Fro-RMD, minimizes the Frobenius norm of X - max(0, WH) over W and H. We prove that Fro-RMD is NP-hard, even for binary matrices and r = 1; to the best of our knowledge, this is the first complexity result for RMD. We also show that Fro-RMD is ill-posed, in the sense that its infimum may not be attained. We then turn to exact RMD, that is, X = max(0, WH), and define the ReLU-rank of X as the smallest r for which such a decomposition exists. We interpret exact RMDs geometrically as configurations of points and hyperplanes in an r-dimensional space, associated with the rows of W and the columns of H, respectively. Building on this interpretation, we derive upper bounds on the ReLU-rank of diagonal, block-diagonal, and block-sparse matrices and, under an additional structural assumption, improve the best known bound for block-diagonal matrices. Finally, we propose two formulations of exact RMD as feasibility problems: a nonconvex quadratically constrained program, which can be tackled by global solvers such as Gurobi, and a formulation based on the latent model of Saul, (``A nonlinear matrix decomposition for mining the zeros of sparse data', SIMODS, 2022), which we tackle using alternating projections for which we establish local convergence together with asymptotic convergence rates. We compare these two approaches on some numerical examples.",
+      "title": "The ReLU Matrix Decomposition: NP-Hardness, Ill-Posedness, and ReLU-Rank",
+      "url": "https://arxiv.org/abs/2610.22255",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.22248",
+      "categories": [
+        "math.RA"
+      ],
+      "published": "2026-10-15T17:21:31Z",
+      "summary": "Evolution algebras, introduced by J. P. Tian as an algebraic model of non- Mendelian inheritance, are commutative algebras with a basis whose distinct elements multiply to zero. The first part of the paper surveys the theory: low-dimensional classifica- tions, structure theory, nilpotency, automorphisms and derivations, directed graphs and random walks, infinite-dimensional and dynamical aspects, and embedding theorems. The second part is a unified list of fifty open questions and eleven new conjectures, each accompanied by the available evidence; two of the conjectures and one of the questions are settled here. We also prove several new observations, most of them formally verified in the proof assistant Lean (see Section 2.1.11): every finite group is the automorphism group of a simple evolution algebra over every field, and | Aut(A)|/ dim A takes every positive ratio- nal value on simple evolution algebras over every field; infinitude of the automorphism group of nilpotent algebras, the possible numbers of idempotents of real perfect evolution algebras, a Galois-theoretic criterion for the existence of idempotents in dimension two, the average number of idempotents over finite fields, and a perfect evolution algebra whose automorphism group is a non-split extension.",
+      "title": "Evolution algebras: a survey of results and a list of open problems",
+      "url": "https://arxiv.org/abs/2610.22248",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.22247",
+      "categories": [
+        "math.RA"
+      ],
+      "published": "2026-10-15T17:20:56Z",
+      "summary": "Let $L/K$ be an arbitrary Galois extension with group $G$, equipped with the Krull topology. Let $C(G,K)$ denote the $K$-vector space of continuous functions $G\\to K$, with $K$ discrete and $G$ acting by left translation. We prove that there exists a $G$-equivariant $K$-linear isomorphism $\\varphi:C(G,K)\\to L$ such that, for every open subgroup $H$ of $G$, the map $\\varphi^H:C(H,L^H)\\to L$ induced by extension by zero and extension of scalars is an $H$-equivariant $L^H$-linear isomorphism. This gives a completely normal analogue of Lenstra's infinite normal basis theorem; the case of finite base fields was previously established in an equivalent form by Hachenberger.",
+      "title": "An infinite completely normal basis theorem",
+      "url": "https://arxiv.org/abs/2610.22247",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.22222",
+      "categories": [
+        "math.CA"
+      ],
+      "published": "2026-10-15T17:03:24Z",
+      "summary": "We give a quantitative planar form of a multiscale argument for Falconer's distance problem. For every $0<η<1$, we obtain a positive lower bound for the Lebesgue measure of the distance set of a compact subset of the unit ball supporting a probability measure with $ν(B(x,r))\\le 2r^{1+η}$. The bound depends only on $η$. For a compact set of diameter $D$ carrying a probability measure with $μ(B(x,r))\\le A(r/D)^{1+\\varepsilon}$, localization gives $|ΔE|\\ge c_{\\varepsilon,p}DA^{-p}$ for every fixed $p>1/\\varepsilon$. In particular, compact planar sets of Hausdorff dimension greater than one have distance sets of positive Lebesgue measure. The proof develops the multiscale method of the September 2026 manuscript of OpenAI, using one sequence of restricted distance measures for both the mass and Fourier estimates. A reconstruction lemma combines summable total-variation errors with summable squared Fourier norms. No endpoint or sharpness assertion is made.",
+      "title": "A quantitative form of the planar Falconer distance theorem",
+      "url": "https://arxiv.org/abs/2610.22222",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.22205",
+      "categories": [
+        "math.LO"
+      ],
+      "published": "2026-10-15T16:54:41Z",
+      "summary": "The paradigm of a simple unstable theory in the sense of Shelah is the theory of the random graph, the Fraïssé limit of the finite graphs. Quantum error correction has a paradigm of its own, and we show that it is the counterpart of the random graph: the Pauli group on countably many qubits, taken modulo phases and with commutation as its relation, is the Fraïssé limit of the finite alternating spaces over the two-element field, and its form computes the syndromes of stabilizer codes. Seen through this correspondence, simplicity theory turns out to be a theory of error correction. Clifford encoding circuits implement the homogeneity of the Pauli group, forking recognizes the logical errors, and the independence theorem of Kim and Pillay is the gluing of syndromes. The two paradigms look alike as first-order structures, and they part company only when observables enter. Each defines a bipartite observable, and we prove that, once preparations are mixed, both acquire the tree property of the second kind in real-valued logic. They reach it by different roads, however, and we show that the probes decide which. The probes of the Pauli observable are the Pauli channels; for them the indicator of each syndrome sector is the difference of the responses of two uniform mixtures, and actual mixtures already witness the tree. The probes of the Rado observable see only marginals; conditions given by actual mixtures remain compatible on disjoint blocks, and the tree must be sought among idealized preparations.",
+      "title": "Classification of bipartite observables III: simplicity, mixtures and quantum error correction",
+      "url": "https://arxiv.org/abs/2610.22205",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.22187",
+      "categories": [
+        "math.NA"
+      ],
+      "published": "2026-10-15T16:42:15Z",
+      "summary": "Large language models (LLMs) are increasingly used in computational social science to assign scalar scores to social and psychological constructs. However, studies use different rating scales, and whether their scores remain comparable across scale designs is understudied. To address this gap, we define and systematically investigate scale sensitivity, the variation in LLM-generated scores caused by rating scale design. We distinguish numerical sensitivity, changes in normalized scores, from semantic sensitivity, changes in score interpretation. To assess both, our experimental design crosses 2 formats (continuous vs. ordinal), 4 ranges (3, 5, 11, and 21 points), and 2 signs (signed vs. unsigned) across 3 tasks (political leaning, sentiment, and toxicity), 2 prompting strategies (zero-shot and rubric-based), and 5 LLMs. We find that changing one design element shifts normalized scores by about 0.10 on average and changes the category of roughly 20% of texts. Sensitivity is greatest for toxicity, the only unipolar construct examined. Also, rubric-based prompting does not reduce sensitivity compared with zero-shot prompting. We provide practical guidance for designing more reliable LLM-based text scoring and highlight the need for robustness checks across alternative scales.",
+      "title": "Change the Number, Change the Answer: Assessing Rating Scale Sensitivity in LLM-Based Text Scoring",
+      "url": "https://arxiv.org/abs/2610.22187",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.22123",
+      "categories": [
+        "math.LO"
+      ],
+      "published": "2026-10-15T16:00:54Z",
+      "summary": "Given a variety $X$ with a self-map $φ$ and subvarieties $Y$ and $Z$ of $X$, we consider the set of $n$ for which $φ^n(Y)$ intersects $Z$ nontrivially. Extending a beautiful construction of Lee and Nam, we show this gives rise to an undecidable problem for a fixed ambient variety $X$ and morphism $φ$. We further use this construction to give a counterexample to a conjecture of the author, Satriano, and Sierra.",
+      "title": "An undecidable problem in dynamics",
+      "url": "https://arxiv.org/abs/2610.22123",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.22078",
+      "categories": [
+        "math.RA"
+      ],
+      "published": "2026-10-15T15:35:49Z",
+      "summary": "We construct a commutative coherent local algebra of Krull dimension zero and a countably generated projectively coresolved Gorenstein flat module whose countable power has infinite Gorenstein flat dimension. This answers negatively the question of whether Gorenstein flat modules over a right coherent ring are closed under direct products. As a consequence, we obtain a pure-injective Ding injective module whose character module has infinite Gorenstein flat dimension and whose character bidual has infinite Gorenstein injective dimension. We also give equivalent conditions for Gorenstein flat modules over a right coherent ring to be closed under direct products, in terms of relative Mittag--Leffler conditions, stationarity, and Gorenstein flat and injective dimensions of character biduals. For the constructed ring, we exhibit a decreasing countable sequence of strong submodules of a free module whose intersection has infinite Gorenstein flat dimension. Thus the abstract elementary class of Gorenstein flat modules, with the strong submodule relation, has finite character but does not admit intersections.",
+      "title": "Direct products of Gorenstein flat modules over coherent rings",
+      "url": "https://arxiv.org/abs/2610.22078",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.22063",
+      "categories": [
+        "math.NA"
+      ],
+      "published": "2026-10-15T15:27:07Z",
+      "summary": "Past work with Tom Seidman analyzed the spatial convergence order of the numerical finite element method applied to time-dependent diffusion-reaction equations with a measure-valued source term. For smooth source terms, the numerical method has second-order accuracy, but the non-smooth source terms introduce a limitation of the order that depends on the spatial dimension. This work in honor of Tom extends the analysis to the finite volume method in its clas- sical two-point flux form and shows that the regularity of the source term reduces the convergence order to 1 in two and 0.5 in three spatial dimensions which is reduced from the nominal second-order and depends on the space dimension. Computational tests with a point source modeled by a Dirac delta distribution exhibit the behavior predicted by the analytical results.",
+      "title": "Finite Volume Convergence for a Heat Equation with a Measure-Valued Source",
+      "url": "https://arxiv.org/abs/2610.22063",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.22040",
+      "categories": [
+        "math.RA"
+      ],
+      "published": "2026-10-15T15:13:28Z",
+      "summary": "Let $\\mathfrak g$ be a finite-dimensional simple complex Lie algebra, and consider the loop algebra $L\\mathfrak g = \\mathfrak g[s, s^{-1}]$ and the affine Lie algebra $\\widehat{\\mathfrak g}$, which is an extension of $L\\mathfrak g$ by a central element $c$. It is known that the rings $\\operatorname{U}(\\widehat{\\mathfrak g})/(c-λ)$ are simple for any nonzero scalar $λ$. On the other hand, the universal enveloping algebra $\\mathrm{U}(L\\mathfrak g) \\cong \\mathrm{U}(\\widehat{\\mathfrak g})/(c)$ has many two-sided ideals, and in this paper we investigate their structure. We show that the two-sided structure of $\\mathrm{U}(L\\mathfrak g)$ is both intricate and well-behaved. Specifically, $\\mathrm{U}(L\\mathfrak g)$ does not satisfy the ascending chain condition on two-sided ideals, but the two-sided ideals still have a nice structure: there is a canonical nested collection of ideals $I_n$, parameterised by positive integers, so that any nonzero two-sided ideal of $\\mathrm{U}(L\\mathfrak g)$ contains all $I_n$ for $n \\gg 0$. The ideals $I_n$ can be thought of as universal annihilators of natural classes of finite-dimensional representations of $L\\mathfrak g$. We also study the Poisson structure of the symmetric algebra $\\mathrm{S}(L\\mathfrak g)$ and give applications to the representation theory of $L\\mathfrak g$.",
+      "title": "Ideals in Enveloping Algebras of Loop Algebras",
+      "url": "https://arxiv.org/abs/2610.22040",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.22013",
+      "categories": [
+        "math.CA"
+      ],
+      "published": "2026-10-15T14:55:28Z",
+      "summary": "Let $T$ be the tetragonal disphenoid whose four congruent faces are isosceles triangles with sides $2,\\sqrt3,\\sqrt3$, so that the dihedral angles are $π/2$ along one opposite pair of edges and $π/3$ along the remaining four. By Smyth's theorem $T$ contains three embedded minimal disks meeting $\\partial T$ orthogonally; the symmetry group $D_{2d}$ of $T$ fixes one and interchanges the other two. We identify all three completely. The distinguished disk is a patch of $\\textbf{Schwarz's $\\mathrm{P}$ surface}$ and the congruent pair are patches of $\\textbf{Schwarz's $\\mathrm{D}$ surface}$, with exact areas \\[ \\operatorname{Area}(Σ^{*}_{A}) = \\frac{K\\!\\left(\\tfrac14\\right)} {K\\!\\left(\\tfrac34\\right)} = 0.781700961348056\\ldots, \\] \\[ \\operatorname{Area}(Σ^{*}_{B}) = \\frac{K\\!\\left(\\tfrac34\\right)} {2\\,K\\!\\left(\\tfrac14\\right)} = 0.639630785585503\\ldots \\] in the normalization $\\operatorname{Vol}(T)=2/3$, inradius $r_T=\\sqrt2/4$. In particular $2\\,\\operatorname{Area}(Σ^{*}_{A})\\operatorname{Area}(Σ^{*}_{B})=1$, which we show is the Bonnet relation for the adjoint pair $(\\mathrm{D},\\mathrm{P})$. The proof is a reversal of the usual strategy: rather than uniformizing the Gauss map, we identify Smyth's three Plateau contours as the $\\textit{tetrahedral four edges}$ and the $\\textit{octahedral four edges}$ --- classically solved by $\\mathrm{D}$ and $\\mathrm{P}$ respectively --- and then conjugate. Both areas agree with Surface Evolver computations of Ken Brakke to all $15$ reported digits. We also show that all twelve corners of the three disks are midpoints of edges of $T$, each of the six midpoints being used twice, and that $T$ is precisely the alcove of the affine Weyl group $\\widetilde{A}_{3}$, confirming a remark of Gandy, Cvijović, et al. (1999).",
+      "title": "Schwarz $\\mathrm{P}$ and Schwarz $\\mathrm{D}$ as free-boundary minimal disks in a tetragonal disphenoid: exact areas",
+      "url": "https://arxiv.org/abs/2610.22013",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.22002",
+      "categories": [
+        "math.LO"
+      ],
+      "published": "2026-10-15T14:44:39Z",
+      "summary": "Hanson introduced the class of theories with bounded $k$-splitting, a higher-arity notion of stability, and proved an indiscernible extraction result for those theories assuming the existence of a $k$-ineffable cardinal. In this article, we show that the conclusion of Hanson's theorem is equivalent to the weaker assertion that there exists a weakly compact cardinal, as well as prove additional indiscernible extraction results for these theories in ZFC. Finally, we show that Hanson's construction of total bounded ultraimaginary Morley sequences in theories with bounded $k$-splitting follows from ZFC.",
+      "title": "Indiscernible Extraction in Theories with Bounded $k$-splitting",
+      "url": "https://arxiv.org/abs/2610.22002",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.21991",
+      "categories": [
+        "math.NA"
+      ],
+      "published": "2026-10-15T14:39:42Z",
+      "summary": "We formulate and analyze a hybridizable discontinuous Galerkin (HDG) method for Maxwell's equations coupled to four time-modulated Drude--Lorentz models: modulated in-coupling, modulated polarization density, modulated current density, and modulated effective mass. The use of electric displacement and model-dependent continuous material states gives a common treatment of temporal interfaces while preserving the distinct physical transmission rules. We derive energy and stability estimates, establish spatial and event-aligned time-error bounds, and separate time-integration error from error caused by misplaced switching times. Numerical experiments in three dimensions and in reduced modal systems confirm the predicted spatial, temporal, and switch-timing behavior, including the field-jump effect specific to the polarization-density model.",
+      "title": "A Hybridizable Discontinuous Galerkin Method for Time-Modulated Drude--Lorentz Media",
+      "url": "https://arxiv.org/abs/2610.21991",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.21889",
+      "categories": [
+        "math.CA"
+      ],
+      "published": "2026-10-15T13:49:49Z",
+      "summary": "We study Tauberian conditions on the successive differences of real sequences which ensure that: (i) ordinary convergence coincides with ideal convergence; or (ii) every ordinary accumulation point is an ideal cluster point; or (iii) every ordinary accumulation point is an ideal limit point. First, we prove that an ideal $\\mathcal{I}$ has the Baire property if and only if there exists a positive sequence $(r_n)$ tending to zero, with $\\sum_n r_n=\\infty$, such that $$ |x_{n+1}-x_n|=O(r_n) $$ is a Tauberian condition for any of the three previous statements. Second, for analytic $P$-ideals, we characterize the validity of the Tauberian rate $O(1/n)$ in terms of properties of lower semicontinuous submeasures which represent it. Lastly, in the case of statistical limit points, we prove that $o(1/n)$ is a Tauberian condition for the statement (iii), whereas $O(1/n)$ need not suffice: in this sense, $o(1/n)$ is an optimal Tauberian rate for (iii). On the other hand, for statistical cluster points in (ii), $O(1/n)$ is an optimal one among nonincreasing rates. For every positive null sequence $(r_n)$ with divergent sum, we also construct a summable ideal $\\mathcal{I}$ for which $o(r_n)$ is an optimal Tauberian rate for both statements (ii) and (iii).",
+      "title": "Tauberian rates and the Baire property of ideals",
+      "url": "https://arxiv.org/abs/2610.21889",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.21847",
+      "categories": [
+        "math.CA"
+      ],
+      "published": "2026-10-15T13:24:57Z",
+      "summary": "We prove a weak $(1,1)$ estimate for the full Poisson Littlewood--Paley $g$-function on every complete Riemannian manifold without boundary, with an explicit universal constant approximately equal to $3.33606$. The estimate requires no curvature restriction, volume doubling, heat kernel bound, or stochastic completeness. The proof combines a precise Poisson maximal inequality with a convex entropy identity; local elliptic regularity identifies the extension to arbitrary real $L^1$ data. As an application, we obtain weak $(1,1)$ estimates for certain spectral multipliers represented by Poisson time derivatives with coefficients in $L^2((0,\\infty),dt/t)$.",
+      "title": "A geometry-independent endpoint estimate for the Littlewood--Paley $g$-function generated by the Poisson semigroup",
+      "url": "https://arxiv.org/abs/2610.21847",
+      "version": 1
+    },
+    {
+      "arxiv_id": "2610.21768",
+      "categories": [
+        "math.CA"
+      ],
+      "published": "2026-10-15T12:23:50Z",
+      "summary": "We study the visible parts and orthogonal projections of the affine fractal percolation. We show that for the affine fractal percolation $E$, conditioned on $E \\neq \\varnothing$, almost surely the dimension of the visible part is equal to $\\min\\{1, \\dim_{\\rm H} E\\}$ from all directions except for the major contracting direction. The visible part from the major contracting direction is notably different from the other directions, and we provide a formula for its Hausdorff and box dimensions. In addition, we show that almost surely conditioned on $E \\neq \\varnothing$, $\\dim_{\\rm H} π(E) =\\min\\{ 1, \\dim_{\\rm H} E\\}$ for every orthogonal projection $π$ excluding the one onto the major contracting direction, and given $\\dim_{\\rm H} E >1$, these projections contain intervals.",
+      "title": "Visible parts and projections of the affine fractal percolation",
+      "url": "https://arxiv.org/abs/2610.21768",
+      "version": 1
+    }
+  ],
+  "schema_version": 1,
+  "source": "arxiv"
+}

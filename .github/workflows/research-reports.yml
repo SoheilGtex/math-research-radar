@@ -1,0 +1,61 @@
+name: Mathematical Research Intelligence Reports
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: research-reports-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  update-research-reports:
+    name: Update arXiv Research Reports
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install -e .
+
+      - name: Generate research reports
+        run: |
+          python scripts/update_arxiv_report.py \
+            --output reports/arxiv/latest.json
+
+      - name: Validate generated reports
+        run: |
+          python -m json.tool reports/arxiv/latest.json > /dev/null
+          test -s reports/arxiv/latest.md
+
+      - name: Commit meaningful report changes
+        run: |
+          git add -- reports/arxiv/latest.json reports/arxiv/latest.md
+
+          if git diff --cached --quiet; then
+            echo "No research data changes. Skipping commit."
+            exit 0
+          fi
+
+          git config user.name "SoheilGtex"
+          git config user.email "soheilsalmanisafarpour@gmail.com"
+
+          git commit -m "data(arxiv): update validated research snapshot [automated]"
+
+          if ! git push origin HEAD:${GITHUB_REF_NAME}; then
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push origin HEAD:${GITHUB_REF_NAME}
+          fi

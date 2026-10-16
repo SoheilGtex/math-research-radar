@@ -49,10 +49,12 @@ jobs:
         run: |
           python -m json.tool reports/arxiv/latest.json > /dev/null
           test -s reports/arxiv/latest.md
+          python -m json.tool reports/arxiv/quality.json > /dev/null
+          python -c 'import json; from pathlib import Path; q = json.loads(Path("reports/arxiv/quality.json").read_text()); assert all(q["checks"].values()), "Integrity checks failed"'
 
       - name: Commit meaningful report changes
         run: |
-          git add -- reports/arxiv/latest.json reports/arxiv/latest.md
+          git add -- reports/arxiv/latest.json reports/arxiv/latest.md reports/arxiv/quality.json
 
           if git diff --cached --quiet; then
             echo "No research data changes. Skipping commit."

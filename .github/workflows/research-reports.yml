@@ -2,6 +2,15 @@ name: Mathematical Research Intelligence Reports
 
 on:
   workflow_dispatch:
+  schedule:
+    # Saturday–Tuesday: 3 runs/day
+    - cron: '17 4,10,16 * * 6,0,1,2'
+
+    # Wednesday: 2 runs/day
+    - cron: '17 4,16 * * 3'
+
+    # Thursday–Friday: 1 run/day
+    - cron: '17 10 * * 4,5'
 
 permissions:
   contents: write
